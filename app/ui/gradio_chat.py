@@ -3,10 +3,16 @@ import shutil
 import os
 import uuid
 
+from sympy.core.random import choice
+
 from app.core.mq import publish_to_rabbitmq
 from app.core.config import settings
 from app.core import logger_utils
 from app.pipeline.feature_pipeline.models.raw import DocumentRawModel
+from app.pipeline.inference_pipeline.reasoning import ReasoningPipeline
+from qdrant_client import QdrantClient,models
+from app.core.db.qdrant import QdrantDatabaseConnector
+
 
 from pathlib import Path
 ROOT_DIR = str(Path(__file__).parent.parent.parent.parent)
@@ -14,6 +20,9 @@ UPLOAD_FOLDER = os.path.join(ROOT_DIR, "uploads")
 
 from docling.document_converter import DocumentConverter
 from markitdown import MarkItDown
+
+client = QdrantClient(url="http://localhost:6333")
+doc_bases = [collection.name for collection in client.get_collections().collections]
 
 
 logger = logger_utils.get_logger(__name__)
@@ -32,14 +41,14 @@ def upload_files(files: list):
 
     print(doc.export_to_markdown())
 
-def process_uploaded_file(files: list, dir_files: list, file_name: str):
+def process_uploaded_file(files: list, dir_files: list, collection_choice: str = 'default'):
     """
     处理上传的文件，支持单个文件上传和目录上传两种方式。
     
     参数:
         files (list): 单个文件上传列表
         dir_files (list): 目录上传文件列表
-        file_name (str): 上传的文件名
+        collection_choice (str): 上传的知识库名
     
     返回:
         tuple: (状态消息, 文件名, 文件名)
@@ -65,7 +74,7 @@ def process_uploaded_file(files: list, dir_files: list, file_name: str):
             try:
                 result = md.convert(file)
                 data = DocumentRawModel(
-                    knowledge_id="default",
+                    knowledge_id=collection_choice,
                     doc_id="222",
                     path=file,
                     filename=file,
@@ -91,12 +100,47 @@ def process_uploaded_file(files: list, dir_files: list, file_name: str):
 
 
 
-def process_query():
+def process_query(query: str, show_reasoning: bool = False, use_background: bool = True, selected_collections: list = None):
 
-    #return
-    pass
+    inference_endpoint = ReasoningPipeline(mock=False)
 
+    response = inference_endpoint.generate(
+        query=query, 
+        enable_rag=True, 
+        sample_for_evaluation=True,
+        doc_names=selected_collections if selected_collections else None
+    )
 
+    return response['answer']
+
+def add_new_collection(new_collection: str):
+    """
+    添加新的知识库集合
+    
+    参数:
+        new_collection (str): 新知识库名称
+        current_collections (list): 当前知识库列表
+    
+    返回:
+        tuple: (更新后的知识库列表, 新知识库名称)
+    """
+    global doc_bases
+    if not new_collection or new_collection.strip() == "":
+        return doc_bases
+
+    if new_collection in doc_bases:
+        return doc_bases
+
+    client.create_collection(
+            collection_name=new_collection,
+            vectors_config=models.VectorParams(size=settings.EMBEDDING_SIZE, distance=models.Distance.COSINE),
+            quantization_config=models.ScalarQuantization(scalar=models.ScalarQuantizationConfig(type=models.ScalarType.INT8,quantile=0.99,always_ram=True,),),
+        )
+
+    logger.debug(f"{doc_bases}<UNK>{new_collection}<UNK>]")
+    doc_bases.append(new_collection)
+
+    return doc_bases
 
 with gr.Blocks(title="推理问答知识库") as demo:
     gr.Markdown("""
@@ -107,7 +151,6 @@ with gr.Blocks(title="推理问答知识库") as demo:
 
     with gr.Row():
         with gr.Column():
-
             files_input = gr.File(
                 label="上传文档",
                 file_types=[".txt", ".docx", ".pdf", ".csv", ".json"],
@@ -121,10 +164,34 @@ with gr.Blocks(title="推理问答知识库") as demo:
                 file_count="directory"
             )
 
+            with gr.Row():
+                collection_choice = gr.Dropdown(
+                    label="选择加载到的知识库",
+                    choices=doc_bases,
+                    multiselect=False,
+                    value=doc_bases[0] if doc_bases else None,
+                    interactive=True
+                )
+                new_collection_input = gr.Textbox(
+                    label="新建知识库",
+                    placeholder="输入新知识库名称",
+                    interactive=True
+                )
+                add_collection_btn = gr.Button("添加")
+
             file_name = gr.Textbox(label="文件名", visible=False)
+
             upload_button = gr.Button("加载文档到知识库")
 
             upload_output = gr.Textbox(label="上传状态", interactive=False)
+
+            collections_dropdown = gr.Dropdown(
+                label="选择知识库集合",
+                choices=doc_bases,
+                multiselect=True,
+                value=None,
+                interactive=True
+            )
 
             # 问题输入
             question_input = gr.Textbox(
@@ -178,17 +245,23 @@ with gr.Blocks(title="推理问答知识库") as demo:
     # 处理上传文件按钮点击
     upload_button.click(
         fn=process_uploaded_file,
-        inputs=[files_input, dir_input, file_name],
+        inputs=[files_input, dir_input, collection_choice],
         outputs=[upload_output, gr.State(), gr.State()]
     )
 
+    add_collection_btn.click(
+        fn=add_new_collection,
+        inputs=new_collection_input,
+        outputs=[collection_choice, collections_dropdown]
+    )
 
     # 处理提交按钮点击
     submit_btn.click(
         fn=process_query,
-        inputs=[question_input, show_reasoning, use_background],
+        inputs=[question_input, show_reasoning, use_background, collections_dropdown],
         outputs=answer_output
     )
+
 
     gr.Examples(
         examples=[

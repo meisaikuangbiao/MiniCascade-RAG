@@ -11,17 +11,15 @@ class QueryExpansion:
     opik_tracer = OpikTracer(tags=["QueryExpansion"])
 
     @staticmethod
-    @opik.track(name="QueryExpansion.generate_response")
+    #@opik.track(name="QueryExpansion.generate_response")
     def generate_response(query: str, to_expand_to_n: int) -> list[str]:
         query_expansion_template = QueryExpansionTemplate()
         prompt = query_expansion_template.create_template(to_expand_to_n)
         model = ChatOpenAI(
-            model=settings.OPENAI_MODEL_ID,
-            api_key=settings.OPENAI_API_KEY,
-            temperature=0,
+            model=settings.Silicon_model_v1, api_key=settings.Silicon_api_key3, base_url=settings.Silicon_base_url,
         )
         chain = prompt | model
-        chain = chain.with_config({"callbacks": [QueryExpansion.opik_tracer]})
+        #chain = chain.with_config({"callbacks": [QueryExpansion.opik_tracer]})
 
         response = chain.invoke({"question": query})
         response = response.content

@@ -34,24 +34,29 @@ class Settings(BaseSettings):
     EXPAND_N_QUERY: int = 5
 
     # CometML config
-    COMET_API_KEY: str
-    COMET_WORKSPACE: str
-    COMET_PROJECT: str = "llm-twin"
+    # COMET_API_KEY: str
+    # COMET_WORKSPACE: str
+    # COMET_PROJECT: str = "llm-twin"
 
     # LLM Model config
     HUGGINGFACE_ACCESS_TOKEN: str | None = None
-    MODEL_ID: str = "pauliusztin/LLMTwin-Llama-3.1-8B" # Change this with your Hugging Face model ID to test out your fine-tuned LLM
+    MODEL_ID: str = "Qwen/Qwen3-8B" # Change this with your Hugging Face model ID to test out your fine-tuned LLM
     DEPLOYMENT_ENDPOINT_NAME: str = "twin"
 
     MAX_INPUT_TOKENS: int = 1536  # Max length of input text.
     MAX_TOTAL_TOKENS: int = 2048  # Max length of the generation (including input text).
     MAX_BATCH_TOTAL_TOKENS: int = 2048  # Limits the number of tokens that can be processed in parallel during the generation.
 
-    # AWS Authentication
-    AWS_REGION: str = "eu-central-1"
-    AWS_ACCESS_KEY: str | None = None
-    AWS_SECRET_KEY: str | None = None
-    AWS_ARN_ROLE: str | None = None
+    Silicon_api_key1: str | None = "sk-gxijztovbtakciuwjwwqyaoxarjfvhuargxkoawhuzsanssm"
+    Silicon_api_key2: str | None = "sk-kutnkphezarrglswegiqwwaywqqwkvanwjobmwmdjututqkf"
+    Silicon_api_key3: str | None = "sk-jkcrphotzrjcdttdpbdzczufqryzmeogzbvwbtpabuitgnzx"
+    Silicon_base_url: str | None = "https://api.siliconflow.cn/v1"
+
+    Silicon_model_v1: str | None = "Qwen/Qwen3-8B"
+    Silicon_model_mini: str | None = "Qwen/Qwen2.5-7B-Instruct"
+    Silicon_model_rerank: str | None = "BAAI/bge-reranker-v2-m3"
 
 
 settings = Settings()
+
+

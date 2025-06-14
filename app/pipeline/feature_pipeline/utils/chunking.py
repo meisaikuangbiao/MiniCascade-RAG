@@ -3,7 +3,7 @@ from langchain.text_splitter import (
     SentenceTransformersTokenTextSplitter,
 )
 
-from config import settings
+from app.pipeline.feature_pipeline.config import settings
 
 
 def chunk_text(text: str) -> list[str]:
@@ -23,3 +23,14 @@ def chunk_text(text: str) -> list[str]:
         chunks.extend(token_splitter.split_text(section))
 
     return chunks
+
+
+
+
+def main():
+    pass
+
+
+
+if __name__ == "__main__":
+    main()

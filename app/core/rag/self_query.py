@@ -1,11 +1,11 @@
 import opik
-from config import settings
+from app.core.config import settings
 from langchain_openai import ChatOpenAI
 from opik.integrations.langchain import OpikTracer
 from typing import List, Optional
 
-import core.logger_utils as logger_utils
-from core import lib
+import app.core.logger_utils as logger_utils
+from app.core import lib
 from app.core.db.documents import UserDocument
 from app.core.rag.prompt_templates import SelfQueryTemplate
 
@@ -13,19 +13,19 @@ logger = logger_utils.get_logger(__name__)
 
 
 class SelfQuery:
-    opik_tracer = OpikTracer(tags=["SelfQuery"])
+    #opik_tracer = OpikTracer(tags=["SelfQuery"])
 
     @staticmethod
-    @opik.track(name="SelQuery.generate_response")
+    #@opik.track(name="SelQuery.generate_response")
     def generate_response(query: str) -> str | None:
         prompt = SelfQueryTemplate().create_template()
         model = ChatOpenAI(
-            model=settings.OPENAI_MODEL_ID,
-            api_key=settings.OPENAI_API_KEY,
-            temperature=0,
+            model=settings.Silicon_model_v1,
+            api_key=settings.Silicon_api_key3,
+            base_url=settings.Silicon_base_url,
         )
         chain = prompt | model
-        chain = chain.with_config({"callbacks": [SelfQuery.opik_tracer]})
+        #chain = chain.with_config({"callbacks": [SelfQuery.opik_tracer]})
 
         response = chain.invoke({"question": query})
         response = response.content

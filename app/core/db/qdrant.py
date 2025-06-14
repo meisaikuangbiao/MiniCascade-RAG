@@ -32,6 +32,7 @@ class QdrantDatabaseConnector:
                     host=settings.QDRANT_DATABASE_HOST,
                     port=settings.QDRANT_DATABASE_PORT,
                 )
+                logger.debug(f"Qdrant连接成功")
 
     def get_collection(self, collection_name: str):
         return self._instance.get_collection(collection_name=collection_name)
@@ -46,6 +47,13 @@ class QdrantDatabaseConnector:
             collection_name=collection_name,
             vectors_config=models.VectorParams(
                 size=settings.EMBEDDING_SIZE, distance=models.Distance.COSINE
+            ),
+            quantization_config=models.ScalarQuantization(
+                scalar=models.ScalarQuantizationConfig(
+                    type=models.ScalarType.INT8,
+                    quantile=0.99,
+                    always_ram=True,
+                ),
             ),
         )
 

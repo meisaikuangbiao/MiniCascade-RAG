@@ -92,7 +92,7 @@ class QdrantVectorDataSink(StatelessSinkPartition):
         payloads = [item.to_payload() for item in items]
         ids, vectors, meta_data = zip(*payloads)
         if meta_data[0]["type"] == "documents":
-                collection_name = f"dir_{str(meta_data[0]['knowledge_id'])}"
+                collection_name = f"{str(meta_data[0]['knowledge_id'])}"
                 try:
                     self._client.get_collection(collection_name=collection_name)
                 except UnexpectedResponse:

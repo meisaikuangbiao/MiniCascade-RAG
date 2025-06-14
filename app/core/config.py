@@ -17,10 +17,10 @@ class AppSettings(BaseSettings):
     # 硅基流动API
     Silicon_api_key1: str | None = "sk-gxijztovbtakciuwjwwqyaoxarjfvhuargxkoawhuzsanssm"
     Silicon_api_key2: str | None = "sk-kutnkphezarrglswegiqwwaywqqwkvanwjobmwmdjututqkf"
-    Silicon_api_key3: str | None = "sk-orbrjhjcqmgezlurbvsmfxqmnjwkmjdrypwdiwvyfarkbnag"
+    Silicon_api_key3: str | None = "sk-jkcrphotzrjcdttdpbdzczufqryzmeogzbvwbtpabuitgnzx"
     Silicon_base_url: str | None = "https://api.siliconflow.cn/v1"
 
-    Silicon_model_v1: str | None = "Qwen/Qwen2.5-72B-Instruct-128K"
+    Silicon_model_v1: str | None = "Qwen/Qwen3-32B"
     Silicon_model_mini: str | None = "Qwen/Qwen2.5-7B-Instruct"
     Silicon_model_rerank: str | None = "BAAI/bge-reranker-v2-m3"
 
