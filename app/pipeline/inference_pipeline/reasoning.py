@@ -15,7 +15,7 @@ from app.pipeline.inference_pipeline.utils import compute_num_tokens, truncate_t
 from langchain_openai import ChatOpenAI
 
 # TODO:使用langfuse进行后台管理
-from opik.integrations.langchain import OpikTracer
+# from opik.integrations.langchain import OpikTracer
 
 logger = logger_utils.get_logger(__name__)
 

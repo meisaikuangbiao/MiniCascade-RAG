@@ -9,10 +9,10 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=ROOT_DIR, env_file_encoding="utf-8")
 
     # Embeddings config
-    EMBEDDING_MODEL_ID: str = "BAAI/bge-small-en-v1.5"
-    EMBEDDING_MODEL_MAX_INPUT_LENGTH: int = 512
-    EMBEDDING_SIZE: int = 384
-    EMBEDDING_MODEL_DEVICE: str = "cpu"
+    EMBEDDING_MODEL_ID: str = "BAAI/bge-m3"
+    EMBEDDING_MODEL_MAX_INPUT_LENGTH: int = 1024
+    EMBEDDING_SIZE: int = 1024
+    EMBEDDING_MODEL_DEVICE: str = "cuda"
 
     # OpenAI config
     OPENAI_MODEL_ID: str = "gpt-4o-mini"
@@ -29,14 +29,9 @@ class Settings(BaseSettings):
     QDRANT_APIKEY: str | None = None
 
     # RAG config
-    TOP_K: int = 5
+    TOP_K: int = 10
     KEEP_TOP_K: int = 5
     EXPAND_N_QUERY: int = 5
-
-    # CometML config
-    # COMET_API_KEY: str
-    # COMET_WORKSPACE: str
-    # COMET_PROJECT: str = "llm-twin"
 
     # LLM Model config
     HUGGINGFACE_ACCESS_TOKEN: str | None = None
