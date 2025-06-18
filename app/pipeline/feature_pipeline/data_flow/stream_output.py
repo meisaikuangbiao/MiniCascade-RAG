@@ -22,9 +22,6 @@ class QdrantOutput(DynamicSink):
         self._sink_type = sink_type
 
         collections = {
-            "cleaned_posts": False,
-            "cleaned_articles": False,
-            "cleaned_others": False,
             "vector_posts": True,
             "vector_articles": True,
             "vector_others": True,

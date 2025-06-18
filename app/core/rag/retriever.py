@@ -66,15 +66,20 @@ class VectorRetriever:
             )
         return lib.flatten(vectors)
 
+    def multi_query(self, to_expand_to_n_queries: int = 3):
+        generated_queries = self._query_expander.generate_response(
+            self.query, to_expand_to_n=to_expand_to_n_queries
+        )
+        return generated_queries
+
     #@opik.track(name="retriever.retrieve_top_k")
     def retrieve_top_k(self,
                        k: int,
                        collections: list[str],
                        filter_setting: dict | None = None,
-                       to_expand_to_n_queries: int = 3) -> list:
-        generated_queries = self._query_expander.generate_response(
-            self.query, to_expand_to_n=to_expand_to_n_queries
-        )
+                       generated_queries = list[str]
+                       ) -> list:
+
         logger.info(
             "成功进行多查询检索",
             num_queries=len(generated_queries),

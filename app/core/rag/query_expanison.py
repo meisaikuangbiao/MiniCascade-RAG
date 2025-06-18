@@ -8,7 +8,7 @@ from app.core.rag.prompt_templates import QueryExpansionTemplate
 
 
 class QueryExpansion:
-    opik_tracer = OpikTracer(tags=["QueryExpansion"])
+    #opik_tracer = OpikTracer(tags=["QueryExpansion"])
 
     @staticmethod
     #@opik.track(name="QueryExpansion.generate_response")
@@ -16,7 +16,7 @@ class QueryExpansion:
         query_expansion_template = QueryExpansionTemplate()
         prompt = query_expansion_template.create_template(to_expand_to_n)
         model = ChatOpenAI(
-            model=settings.Silicon_model_v1, api_key=settings.Silicon_api_key3, base_url=settings.Silicon_base_url,
+            model=settings.MODEL_PATH, api_key=settings.KEY, base_url=settings.LOCAL,
         )
         chain = prompt | model
         #chain = chain.with_config({"callbacks": [QueryExpansion.opik_tracer]})

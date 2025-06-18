@@ -36,7 +36,7 @@ if __name__ == "__main__":
         """
 
     response = inference_endpoint.generate(
-        query=query, enable_rag=True, sample_for_evaluation=True,
+        query=query, enable_rag=True, sample_for_evaluation=True, doc_names=['ddddd']
     )
 
     logger.info("=" * 50)

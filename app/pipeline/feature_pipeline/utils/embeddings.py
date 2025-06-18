@@ -3,9 +3,22 @@
 # @Author  : Galleons
 # @File    : embeddings.py
 
+from tenacity import retry, stop_after_attempt, wait_exponential
+from contextlib import contextmanager
+from typing import List, Optional, Any, Coroutine
+import logging
+from functools import lru_cache
+from xinference.client import Client
+import numpy as np
 
-#from InstructorEmbedding import INSTRUCTOR
-from sentence_transformers.SentenceTransformer import SentenceTransformer
+# 配置日志
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+from FlagEmbedding import BGEM3FlagModel
+
+embed_model_bge = BGEM3FlagModel('/data/model_cache/bge-m3', use_fp16=True)
 
 from app.pipeline.feature_pipeline.config import settings
 
@@ -19,8 +32,6 @@ from app.pipeline.feature_pipeline.config import settings
 
 
 
-from xinference.client import Client
-import numpy as np
 
 client = Client("http://localhost:9997")
 embed_model_raw = client.get_model(settings.EMBEDDING_MODEL_ID)
@@ -37,6 +48,11 @@ def embedd_text_tolist(text: str) -> list[int]:
     return embedding_list
 
 
+def hybrid_embedding(texts: list[str]) -> dict:
+    output = embed_model_bge.encode(texts, return_dense=True, return_sparse=True, return_colbert_vecs=False)
+    return output
+
+
 # 代码嵌入模型
 def embedd_repositories(text: str):
     # TODO：优化代码嵌入模型部分，寻找合适模型
@@ -44,18 +60,6 @@ def embedd_repositories(text: str):
     embedding_array = np.array(embedding_list)
     return embedding_array
 
-
-
-from tenacity import retry, stop_after_attempt, wait_exponential
-from contextlib import contextmanager
-from typing import List, Optional, Any, Coroutine
-import numpy as np
-import logging
-from functools import lru_cache
-
-# 配置日志
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
 
 
 class EmbeddingClientManager:

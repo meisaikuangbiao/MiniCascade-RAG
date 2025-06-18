@@ -56,8 +56,11 @@ class ReasoningPipeline:
             logger.debug(f"开始检索。")
 
             retriever = VectorRetriever(query=query)
+
+            multiquery = retriever.multi_query(to_expand_to_n_queries=3)
+
             hits = retriever.retrieve_top_k(
-                k=settings.TOP_K, to_expand_to_n_queries=settings.EXPAND_N_QUERY, collections=doc_names
+                k=settings.TOP_K, collections=doc_names, generated_queries=multiquery
             )
             logger.debug(f"检索结果：{hits}")
 

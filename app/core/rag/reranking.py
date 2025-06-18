@@ -1,4 +1,3 @@
-from app.core.config import settings
 from langchain_openai import ChatOpenAI
 from typing import List
 
@@ -45,8 +44,38 @@ class Reranker:
         return reranked_passages
 
 if __name__ == "__main__":
-    query = "苹果"
-    passages = ["苹果", "香蕉", "水果", "蔬菜"]
+    import time
+
+
+    from xinference.client import Client
+
+    client = Client("http://localhost:9997")
+    model_uid = client.launch_model(model_name="bge-reranker-v2-m3", model_type="rerank")
+
+
+    model = client.get_model(model_uid)
+
+    query = "A man is eating pasta."
+    passages = [
+        "A man is eating food.",
+        "A man is eating a piece of bread.",
+        "The girl is carrying a baby.",
+        "A man is riding a horse.",
+        "A woman is playing violin."
+    ]
+    start_time = time.time()
+    print(start_time)
+    print(model.rerank(passages, query))
+
+    stage1 = time.time() - start_time
+    print(stage1)
+
     keep_top_k = 4
     rerank_passages = Reranker.generate_response(query, passages, keep_top_k)
     print(rerank_passages)
+
+    stage2 = time.time() - start_time - stage1
+    print(stage2)
+
+
+
