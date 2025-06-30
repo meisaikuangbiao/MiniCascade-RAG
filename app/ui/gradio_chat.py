@@ -3,8 +3,6 @@ import shutil
 import os
 import uuid
 
-from sympy.core.random import choice
-
 from app.core.mq import publish_to_rabbitmq
 from app.core.config import settings
 from app.core import logger_utils

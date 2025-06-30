@@ -177,7 +177,7 @@ class EmbeddingDispatcher:
         logger.info(
             "成功嵌入分块。",
             data_type=data_type,
-            embedding_len=len(embedded_chunk_model.embedded_content),
+            embedding_len=embedded_chunk_model,
         )
 
         return embedded_chunk_model

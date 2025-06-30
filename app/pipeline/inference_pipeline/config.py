@@ -22,9 +22,7 @@ class Settings(BaseSettings):
     QDRANT_DATABASE_HOST: str = "localhost"  # Or 'qdrant' if running inside Docker
     QDRANT_DATABASE_PORT: int = 6333
 
-    USE_QDRANT_CLOUD: bool = (
-        False  # if True, fill in QDRANT_CLOUD_URL and QDRANT_APIKEY
-    )
+    USE_QDRANT_CLOUD: bool = False
     QDRANT_CLOUD_URL: str = "str"
     QDRANT_APIKEY: str | None = None
 
@@ -50,6 +48,8 @@ class Settings(BaseSettings):
     Silicon_model_v1: str | None = "Qwen/Qwen3-8B"
     Silicon_model_mini: str | None = "Qwen/Qwen2.5-7B-Instruct"
     Silicon_model_rerank: str | None = "BAAI/bge-reranker-v2-m3"
+
+    AGENT_KEY: str | None = "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"
 
 
 settings = Settings()

@@ -8,8 +8,6 @@ ROOT_DIR = str(Path(__file__).parent.parent)
 sys.path.append(ROOT_DIR)
 
 from app.core.config import settings
-from reasoning import ReasoningPipeline
-
 settings.patch_localhost()
 
 

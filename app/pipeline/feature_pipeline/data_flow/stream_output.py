@@ -86,27 +86,60 @@ class QdrantVectorDataSink(StatelessSinkPartition):
         self._client = connection
 
     def write_batch(self, items: list[VectorDBDataModel]) -> None:
+        # payloads = [item.to_payload() for item in items]
+        # logger.debug(f"接收到批量数据：{payloads}")
+        # ids, vectors, meta_data = zip(*payloads)
+        # dense_vectors = [vec['dense'] for vec in vectors]
+        # sparse_vectors = [vec['sparse'] for vec in vectors]
+        # logger.debug(f"接收到向量类型：{vectors}，类型为{type(vectors)}")
+        #
+        # if meta_data[0]["type"] == "documents":
+        #         collection_name = f"{str(meta_data[0]['knowledge_id'])}"
+        #         try:
+        #             self._client.get_collection(collection_name=collection_name)
+        #         except UnexpectedResponse:
+        #             logger.info(
+        #                 "未检测到知识库。正在创建一个新的知识库...",
+        #                 collection_name=collection_name,
+        #             )
+        #             self._client.create_vector_collection(
+        #                 collection_name=collection_name
+        #             )
+        #         logger.debug(
+        #             "数据类型：",
+        #             datamodels=meta_data,
+        #         )
+        # else:
+        #     collection_name = get_vector_collection(data_type=meta_data[0]["type"])
+        #
+        # self._client.write_data(
+        #     collection_name=collection_name,
+        #     points=Batch(
+        #         ids=ids,
+        #         vectors={"dense": dense_vectors, "sparse": sparse_vectors},
+        #         payloads=meta_data
+        #     ),
+        # )
         payloads = [item.to_payload() for item in items]
         ids, vectors, meta_data = zip(*payloads)
         if meta_data[0]["type"] == "documents":
-                collection_name = f"{str(meta_data[0]['knowledge_id'])}"
-                try:
-                    self._client.get_collection(collection_name=collection_name)
-                except UnexpectedResponse:
-                    logger.info(
-                        "未检测到知识库。正在创建一个新的知识库...",
-                        collection_name=collection_name,
-                    )
-                    self._client.create_vector_collection(
-                        collection_name=collection_name
-                    )
-                logger.debug(
-                    "数据类型：",
-                    datamodels=meta_data,
+            collection_name = f"zsk_{str(meta_data[0]['knowledge_id'])}"
+            try:
+                self._client.get_collection(collection_name=collection_name)
+            except UnexpectedResponse:
+                logger.info(
+                    "未检测到知识库。正在创建一个新的知识库...",
+                    collection_name=collection_name,
                 )
+                self._client.create_vector_collection(
+                    collection_name=collection_name
+                )
+            logger.debug(
+                "数据类型：",
+                datamodels=meta_data,
+            )
         else:
             collection_name = get_vector_collection(data_type=meta_data[0]["type"])
-
         self._client.write_data(
             collection_name=collection_name,
             points=Batch(ids=ids, vectors=vectors, payloads=meta_data),
@@ -117,6 +150,7 @@ class QdrantVectorDataSink(StatelessSinkPartition):
             collection_name=collection_name,
             num=len(ids),
         )
+
 
 
 def get_clean_collection(data_type: str) -> str:

@@ -7,6 +7,10 @@ from app.pipeline.feature_pipeline.config import settings
 
 
 def chunk_text(text: str) -> list[str]:
+    """
+    使用递归分词，详见：
+    https://python.langchain.com/docs/how_to/recursive_text_splitter/
+    """
     character_splitter = RecursiveCharacterTextSplitter(
         separators=["\n\n"], chunk_size=500, chunk_overlap=0
     )

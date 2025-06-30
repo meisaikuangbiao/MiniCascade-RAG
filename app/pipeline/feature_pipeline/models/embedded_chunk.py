@@ -90,6 +90,7 @@ class DocumentEmbeddedChunkModel(VectorDBDataModel):
     filename: str
     chunk_id: str
     chunk_content: str
+    #hybrid_vec: dict
     embedded_content: np.ndarray
     user_id: str | None = None
     type: str
@@ -97,7 +98,7 @@ class DocumentEmbeddedChunkModel(VectorDBDataModel):
     class Config:
         arbitrary_types_allowed = True
 
-    def to_payload(self) -> Tuple[str, np.ndarray, dict]:
+    def to_payload(self) -> Tuple[str, dict, dict]:
         data = {
             "knowledge_id": self.knowledge_id,
             "doc_id": self.doc_id,
@@ -108,4 +109,5 @@ class DocumentEmbeddedChunkModel(VectorDBDataModel):
             "type": self.type,
         }
 
-        return self.chunk_id, self.embedded_content, data
+        return self.chunk_id,  self.embedded_content, data
+        #return self.chunk_id, self.hybrid_vec, data

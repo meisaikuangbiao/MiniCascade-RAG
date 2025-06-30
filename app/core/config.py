@@ -25,7 +25,7 @@ class AppSettings(BaseSettings):
     Silicon_model_rerank: str | None = "BAAI/bge-reranker-v2-m3"
 
     MODEL_PATH: str = "/data/cyx_model_weights/Qwen3-4B"
-    LOCAL: str = 'http://localhost:8000/v1'
+    LOCAL: str = 'http://localhost:9011/v1'
     KEY: str = 'EMPTY'
 
     # 消息队列配置

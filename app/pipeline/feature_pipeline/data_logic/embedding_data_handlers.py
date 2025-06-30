@@ -8,7 +8,7 @@ from app.pipeline.feature_pipeline.models.embedded_chunk import (
     RepositoryEmbeddedChunkModel,
     DocumentEmbeddedChunkModel,
 )
-from app.pipeline.feature_pipeline.utils.embeddings import embedd_text
+from app.pipeline.feature_pipeline.utils.embeddings import embedd_text, hybrid_embedding
 
 
 class EmbeddingDataHandler(ABC):
@@ -74,6 +74,7 @@ class DocumentEmbeddingHandler(EmbeddingDataHandler):
             chunk_id=data_model.chunk_id,
             chunk_content=data_model.chunk_content,
             embedded_content=embedd_text(data_model.chunk_content),
+            #hybrid_vec=hybrid_embedding([data_model.chunk_content]),
             user_id=data_model.user_id,
             type=data_model.type,
         )

@@ -10,6 +10,7 @@ import logging
 from functools import lru_cache
 from xinference.client import Client
 import numpy as np
+from qdrant_client import models
 
 # 配置日志
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -29,10 +30,6 @@ from app.pipeline.feature_pipeline.config import settings
 #     instruction = "Represent the structure of the repository"
 #     return model.encode([instruction, sentence])
 
-
-
-
-
 client = Client("http://localhost:9997")
 embed_model_raw = client.get_model(settings.EMBEDDING_MODEL_ID)
 embed_model = client.get_model(settings.EMBEDDING_MODEL_ID)
@@ -50,7 +47,9 @@ def embedd_text_tolist(text: str) -> list[int]:
 
 def hybrid_embedding(texts: list[str]) -> dict:
     output = embed_model_bge.encode(texts, return_dense=True, return_sparse=True, return_colbert_vecs=False)
-    return output
+    idx, vals = zip(*output['lexical_weights'][0].items())
+    return {'dense': output['dense_vecs'][0], 'sparse': models.SparseVector(indices=idx, values=vals)}
+
 
 
 # 代码嵌入模型
@@ -143,3 +142,22 @@ def get_cached_embedding(text: str) -> Coroutine[Any, Any, list[float]]:
     if len(text) > 500:
         return vectorize(text)
     return vectorize(text)
+
+
+if __name__ == "__main__":
+    import time
+
+    start_time = time.time()
+    for i in range(10):
+        embedd_text('成功连接到数据库,现在开始使用测试样例测试运行时间！')
+    end_time = time.time()
+
+    print(f"函数1执行时间为: {end_time - start_time:.6f} 秒")
+
+    start_time = time.time()
+    for i in range(10):
+        hybrid_embedding(['成功连接到数据库,现在开始使用测试样例测试运行时间！'])
+    end_time = time.time()
+
+    print(f"函数2执行时间为: {end_time - start_time:.6f} 秒")
+

@@ -31,7 +31,7 @@ class VectorRetriever:
         self._reranker = Reranker()
 
     def _search_single_query(self, generated_query: str, collections: list[str], metadata_filter_value: dict = None, k: int = 5):
-        assert k > 3, "查询集合限制，k应该小于3"
+        #assert k > 3, "查询集合限制，k应该小于3"
         # 生成查询向量
         query_vector = self._embedder.create_embedding(generated_query)['data'][0]['embedding']
 
@@ -64,13 +64,20 @@ class VectorRetriever:
                     limit=k // len(collections),
                 )
             )
+            logger.debug(f"收到结果：{vectors[-1]}")
         return lib.flatten(vectors)
 
-    def multi_query(self, to_expand_to_n_queries: int = 3):
-        generated_queries = self._query_expander.generate_response(
+    def multi_query(self, to_expand_to_n_queries: int = 3, stream: bool | None = False):
+        # TODO: 完善流式管道
+        if stream:
+            return self._query_expander.generate_response(
             self.query, to_expand_to_n=to_expand_to_n_queries
         )
-        return generated_queries
+        else:
+            generated_queries = self._query_expander.generate_response(
+                self.query, to_expand_to_n=to_expand_to_n_queries
+            )
+            return generated_queries
 
     #@opik.track(name="retriever.retrieve_top_k")
     def retrieve_top_k(self,
