@@ -1,7 +1,7 @@
 import asyncio
 from fastmcp import Client
 
-client = Client("../server/demo.py")
+client = Client("../services/demo.py")
 
 async def call_tool(name: str):
     async with client:
