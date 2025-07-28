@@ -1,7 +1,7 @@
 services:
   mq:
     image: rabbitmq:3-management-alpine
-    container_name: KunlunRAG-mq
+    container_name: mq
     ports:
       - "5673:5672"
       - "15673:15672"
@@ -12,7 +12,7 @@ services:
 
   qdrant:
     image: qdrant/qdrant:latest
-    container_name: KunlunRAG-qdrant
+    container_name: qdrant
     ports:
       - "6333:6333"
       - "6334:6334"
@@ -26,7 +26,6 @@ services:
 
 
   feature_pipeline:
-    image: "KunlunRAG-feature-pipeline"
     container_name: KunlunRAG-feature-pipeline
     build:
       context: .
@@ -44,3 +43,5 @@ services:
 
 volumes:
   qdrant-data:
+
+

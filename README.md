@@ -1,4 +1,4 @@
-# 昆仑元 RAG
+# MiniCascade-RAG
 
 Reasoning RAG
 
