@@ -1,7 +1,7 @@
 [project]
-name = "kunlunrag"
+name = "MiniCascade-RAG"
 version = "0.1.0"
-description = "Add your description here"
+description = "Build for Enterprise-level RAG System"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -34,8 +34,9 @@ dependencies = [
 
 
 
-#
-#[[tool.uv.index]]
-#url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
-#default = true
+
+[[tool.uv.index]]
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+default = true
+
 
