@@ -6,8 +6,9 @@
 """
 这里是文件说明
 """
-from .app_config import RAGConfig
+#from .rag_config import RAGConfig
+from .pipeline_config import PipelineConfig
 
 
-
-rag_config = RAGConfig()
+#rag_config = RAGConfig()
+pipeline_config = PipelineConfig()
