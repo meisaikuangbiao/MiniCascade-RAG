@@ -24,7 +24,7 @@ class AppSettings(BaseSettings):
     Silicon_model_mini: str | None = "Qwen/Qwen2.5-7B-Instruct"
     Silicon_model_rerank: str | None = "BAAI/bge-reranker-v2-m3"
 
-    MODEL_PATH: str = "/data/cyx_model_weights/Qwen3-4B"
+    MODEL_PATH: str = "/data/model_weights/Qwen3-4B"
     LOCAL: str = 'http://localhost:9011/v1'
     KEY: str = 'EMPTY'
 
