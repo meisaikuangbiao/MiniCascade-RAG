@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
-# @Time    : 2025/665 14:35
+# @Time    : 2025/6/5 14:35
 # @Author  : Galleons
-# @File    : router.py
+# @File    : main.py
 
+"""
+ 管道调度脚本
+"""
 
 import bytewax.operators as op
 from bytewax.dataflow import Dataflow
