@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Optional, Union
 from urllib.parse import unquote
 
-from configs import rag_config
+from app.configs import rag_config
 from core.helper import ssrf_proxy
 from core.rag.extractor.csv_extractor import CSVExtractor
 from core.rag.extractor.entity.datasource_type import DatasourceType

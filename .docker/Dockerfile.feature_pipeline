@@ -11,7 +11,8 @@ ENV WORKSPACE_ROOT=/usr/src/app \
 RUN mkdir -p $WORKSPACE_ROOT
 
 # Install system dependencies
-RUN apt-get update -y \
+RUN sed -i 's|http://archive.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list \
+    && apt-get update -y \
     && apt-get install -y --no-install-recommends build-essential \
     gcc \
     python3-dev \
@@ -26,7 +27,7 @@ RUN poetry config installer.max-workers 20
 RUN apt-get remove -y curl
 
 # Copy the pyproject.toml and poetry.lock files from the root directory
-COPY ./pyproject.toml ./poetry.lock ./
+COPY ./.docker/pyproject.toml ./.docker/poetry.lock ./
 
 # Install the dependencies and clear cache
 RUN poetry config virtualenvs.create false && \
@@ -38,8 +39,8 @@ RUN poetry config virtualenvs.create false && \
 WORKDIR $WORKSPACE_ROOT
 
 # Copy the feature pipeline and any other necessary directories
-COPY ./src/feature_pipeline .
-COPY ./src/core ./core
+COPY ./app/pipeline/feature_pipeline .
+COPY ./app/core ./core
 
 # Set the PYTHONPATH environment variable
 ENV PYTHONPATH=/usr/src/app

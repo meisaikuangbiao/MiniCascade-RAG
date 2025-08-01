@@ -8,4 +8,6 @@
 """
 from .app_config import RAGConfig
 
+
+
 rag_config = RAGConfig()
