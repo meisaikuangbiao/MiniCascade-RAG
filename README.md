@@ -2,7 +2,7 @@
 
 Reasoning RAG
 
-## 快速启动
+## Quick Start
 
 ```bash
 cd docker
@@ -10,15 +10,15 @@ cp .env.example .env
 docker compose up -d
 ```
 
-### 项目部署
-#### 3.1 环境部署
-进入项目目录，输入：
+### Deployment
+#### 3.1 uv environment
+Enter project directory, use：
 ```bash
-uv sync   # 若未安装uv先pip install uv 安装
+uv sync   # if not have uv use "pip install uv" for install
 ``` 
-自动同步项目环境
+to synchronize project environment automatically
 
-#### 3.2 docker 启动
+#### 3.2 docker
 Qdrant：
 ```bash
 docker run -p 6333:6333 -p 6334:6334 \
@@ -33,3 +33,13 @@ docker run -it --rm --name rabbitmq \
     -p 5672:5672 -p 15672:15672 \
     rabbitmq:4-management
 ```
+
+## API KEY Configure
+
+All the sensitive credentials are placed in a `.env` file that will always sit at the root of your directory, at the same level with the `.env.example` file.
+
+Go to the root of the repository and copy our `.env.example` file as follows:
+```shell
+cp .env.example .env
+```
+Now fill it with your credentials, following the suggestions from the next section.
