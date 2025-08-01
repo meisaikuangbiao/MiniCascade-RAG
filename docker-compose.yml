@@ -1,6 +1,6 @@
 services:
   mq:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq:4-management
     container_name: mq
     ports:
       - "5673:5672"
@@ -26,7 +26,7 @@ services:
 
 
   feature_pipeline:
-    container_name: KunlunRAG-feature-pipeline
+    container_name: MiniCascade-feature-pipeline
     build:
       context: .
       dockerfile: .docker/Dockerfile.feature_pipeline
