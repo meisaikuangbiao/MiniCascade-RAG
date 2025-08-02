@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Generic, Iterable, List, Optional, TypeVar, Any, Dict, Iterator
 
 from bytewax.inputs import FixedPartitionedSource, StatefulSourcePartition
-from app.pipeline.feature_pipeline.config import settings
+from app.configs import pipeline_config
 from app.core import get_logger
 from app.core.mq import RabbitMQConnection
 
@@ -103,4 +103,4 @@ class RabbitMQSource(FixedPartitionedSource):
             partition=for_part,
             has_resume_state=resume_state is not None
         )
-        return RabbitMQPartition(queue_name=settings.RABBITMQ_QUEUE_NAME)
+        return RabbitMQPartition(queue_name=pipeline_config.RABBITMQ_QUEUE_NAME)

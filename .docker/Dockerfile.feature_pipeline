@@ -1,7 +1,7 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim-bullseye
 
-ENV WORKSPACE_ROOT=/app \
+ENV WORKSPACE_ROOT=/usr/src/app \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     POETRY_HOME="/opt/poetry" \
@@ -39,14 +39,17 @@ RUN poetry config virtualenvs.create false && \
 WORKDIR $WORKSPACE_ROOT
 
 # Copy the feature pipeline and any other necessary directories
-COPY ./app/pipeline/feature_pipeline .
-COPY ./app/core ./core
-COPY ./app/configs ./configs
+#COPY ./app/pipeline/feature_pipeline ./pipeline/feature_pipeline
+#COPY ./app/core ./core
+#COPY ./app/configs ./configs
 
-# Set the PYTHONPATH environment variable
-ENV PYTHONPATH=/app
+# Copy the entire app directory to maintain module structure
+COPY ./app .
 
-RUN chmod +x /app/scripts/bytewax_entrypoint.sh
+# Set the PYTHONPATH environment variable to include the workspace root
+ENV PYTHONPATH=/usr/src/app
+
+RUN chmod +x /usr/src/app/pipeline/feature_pipeline/scripts/bytewax_entrypoint.sh
 
 # Command to run the Bytewax pipeline script
-CMD ["/app/scripts/bytewax_entrypoint.sh"]
+CMD ["/usr/src/app/pipeline/feature_pipeline/scripts/bytewax_entrypoint.sh"]

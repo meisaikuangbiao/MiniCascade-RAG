@@ -45,7 +45,9 @@ class QdrantOutput(DynamicSink):
                         collection_name=collection_name
                     )
 
-    def build(self, step_id: str, worker_index: int, worker_count: int, *args, **kwargs) -> StatelessSinkPartition:
+    #def build(self, step_id: str, worker_index: int, worker_count: int, *args, **kwargs) -> StatelessSinkPartition:
+    def build(self, step_id: str, worker_index: int, *args, **kwargs) -> StatelessSinkPartition:
+
         if self._sink_type == "clean":
             return QdrantCleanedDataSink(connection=self._connection)
         elif self._sink_type == "vector":

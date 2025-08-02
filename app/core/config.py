@@ -31,13 +31,13 @@ class AppSettings(BaseSettings):
     # 消息队列配置
     RABBITMQ_DEFAULT_USERNAME: str = "guest"
     RABBITMQ_DEFAULT_PASSWORD: str = "guest"
-    RABBITMQ_HOST: str = "localhost"
+    RABBITMQ_HOST: str = "mq"
     RABBITMQ_PORT: int = 5672
     RABBITMQ_QUEUE_NAME: str = "rag_test"
 
     # QdrantDB配置
     QDRANT_CLOUD_URL: str = "str"
-    QDRANT_DATABASE_HOST: str = "localhost"
+    QDRANT_DATABASE_HOST: str = "qdrant"
     QDRANT_DATABASE_PORT: int = 6333
     USE_QDRANT_CLOUD: bool = False
     QDRANT_APIKEY: str | None = None

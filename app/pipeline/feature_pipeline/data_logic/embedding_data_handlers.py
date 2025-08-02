@@ -8,7 +8,7 @@ from app.pipeline.feature_pipeline.models.embedded_chunk import (
     RepositoryEmbeddedChunkModel,
     DocumentEmbeddedChunkModel,
 )
-from app.pipeline.feature_pipeline.utils.embeddings import embedd_text, hybrid_embedding
+from app.pipeline.feature_pipeline.utils.embeddings import embedd_text
 
 
 class EmbeddingDataHandler(ABC):
