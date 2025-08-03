@@ -2,11 +2,11 @@ import concurrent.futures
 from typing import List, Optional
 
 import opik
+import requests
 from app.core.config import settings
 from qdrant_client import models
-from sentence_transformers.SentenceTransformer import SentenceTransformer
-from app.pipeline.feature_pipeline.utils.embeddings import embed_model
-
+#from app.pipeline.feature_pipeline.utils.embeddings import embed_model
+from app.pipeline.feature_pipeline.utils.embeddings import embedd_text_tolist
 import app.core.logger_utils as logger_utils
 from app.core import lib
 from app.core.db.qdrant import QdrantDatabaseConnector
@@ -25,7 +25,7 @@ class VectorRetriever:
     def __init__(self, query: str) -> None:
         self._client = QdrantDatabaseConnector()
         self.query = query
-        self._embedder = embed_model
+        #self._embedder = embed_model
         self._query_expander = QueryExpansion()
         self._metadata_extractor = SelfQuery()
         self._reranker = Reranker()
@@ -33,7 +33,8 @@ class VectorRetriever:
     def _search_single_query(self, generated_query: str, collections: list[str], metadata_filter_value: dict = None, k: int = 5):
         #assert k > 3, "查询集合限制，k应该小于3"
         # 生成查询向量
-        query_vector = self._embedder.create_embedding(generated_query)['data'][0]['embedding']
+        #query_vector = self._embedder.create_embedding(generated_query)['data'][0]['embedding']
+        query_vector = embedd_text_tolist(generated_query)
 
         # 初始化存储各集合查询结果的列表
         vectors = []
