@@ -30,6 +30,7 @@ dependencies = [
     "structlog>=25.3.0",
     # "unstructured>=0.17.2",
     #"vllm>=0.9.1",
+    "transformers>=4.54.1",
 ]
 
 
