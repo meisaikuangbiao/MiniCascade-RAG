@@ -25,21 +25,21 @@ services:
     restart: always
 
 
-#  feature_pipeline:
-#    container_name: MiniCascade-feature-pipeline
-#    build:
-#      context: .
-#      dockerfile: .docker/Dockerfile.feature_pipeline
-#    environment:
-#      BYTEWAX_PYTHON_FILE_PATH: "main:flow"
-#      DEBUG: "false"
-#      BYTEWAX_KEEP_CONTAINER_ALIVE: "true"
-#    env_file:
-#      - .env
-#    depends_on:
-#      - mq
-#      - qdrant
-#    restart: always
+  feature_pipeline:
+    container_name: MiniCascade-feature-pipeline
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile.feature_pipeline
+    environment:
+      BYTEWAX_PYTHON_FILE_PATH: "main:flow"
+      DEBUG: "false"
+      BYTEWAX_KEEP_CONTAINER_ALIVE: "true"
+    env_file:
+      - .env
+    depends_on:
+      - mq
+      - qdrant
+    restart: always
 
   app:
     container_name: MiniCascade-backend
