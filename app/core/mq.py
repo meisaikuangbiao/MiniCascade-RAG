@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict, Self
+from typing import Any, Dict, Self, List
 
 import pika
 from pika.adapters.blocking_connection import BlockingChannel
@@ -29,6 +29,7 @@ class RabbitMQConnection:
         password: str | None = None,
         virtual_host: str = "/",
         fail_silently: bool = False,
+        queue_names: List[str] = ['test_files'],
         **kwargs,
     ) -> None:
         self.host = host or settings.RABBITMQ_HOST
@@ -37,6 +38,7 @@ class RabbitMQConnection:
         self.password = password or settings.RABBITMQ_DEFAULT_PASSWORD
         self.virtual_host = virtual_host
         self.fail_silently = fail_silently
+        self.queue_names = queue_names  # 保存队列名称列表
         self._connection = None
 
     def __enter__(self):
@@ -57,6 +59,11 @@ class RabbitMQConnection:
                     credentials=credentials,
                 )
             )
+            # 在连接成功后，检查并初始化队列
+            with self._connection.channel() as channel:
+                for queue_name in self.queue_names:
+                    self._initialize_queue(channel, queue_name)
+
         except pika.exceptions.AMQPConnectionError as e:
             logger.exception("连接RabbitMQ失败：")
             if not self.fail_silently:
@@ -74,6 +81,15 @@ class RabbitMQConnection:
             self._connection.close()
             self._connection = None
             print("已关闭RabbitMQ连接")
+
+    def _initialize_queue(self, channel: BlockingChannel, queue_name: str):
+        """检查并初始化队列。"""
+        try:
+            # 声明队列（如果队列不存在则创建）
+            channel.queue_declare(queue=queue_name, durable=True)
+            logger.info(f"队列 {queue_name} 已初始化。")
+        except Exception as e:
+            logger.exception(f"初始化队列 {queue_name} 时发生错误：{e}")
 
 
 def publish_to_rabbitmq(queue_name: str, data: str):

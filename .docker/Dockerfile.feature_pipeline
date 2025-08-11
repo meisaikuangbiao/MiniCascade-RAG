@@ -21,8 +21,9 @@ RUN sed -i 's|http://deb.debian.org/debian|https://mirrors.tuna.tsinghua.edu.cn/
     && apt-get clean
 
 # Install Poetry using pip and clear cache
-RUN pip install --no-cache-dir "poetry==$POETRY_VERSION"
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --no-cache-dir "poetry==$POETRY_VERSION"
 RUN poetry config installer.max-workers 20
+
 
 RUN apt-get remove -y curl
 

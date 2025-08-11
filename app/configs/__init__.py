@@ -8,7 +8,8 @@
 """
 #from .rag_config import RAGConfig
 from .pipeline_config import PipelineConfig
-
+from .db_config import PostgresConfig
 
 #rag_config = RAGConfig()
 pipeline_config = PipelineConfig()
+postgres_config = PostgresConfig()

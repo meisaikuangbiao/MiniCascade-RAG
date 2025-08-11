@@ -1,3 +1,7 @@
+"""
+# TODO: 引入 LMCache 加速推理 https://github.com/LMCache/LMCache
+"""
+
 import sys
 from pathlib import Path
 

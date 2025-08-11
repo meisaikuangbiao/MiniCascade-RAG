@@ -18,6 +18,7 @@ logger = logger_utils.get_logger(__name__)
 
 
 class QdrantDatabaseConnector:
+
     _instance: QdrantClient | None = None
 
     def __init__(self) -> None:

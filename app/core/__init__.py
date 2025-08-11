@@ -10,4 +10,4 @@ logger = get_logger(__file__)
 # except:
 #     logger.warning("Could not configure Opik.")
 
-__all__ = ["get_logger", "logger_utils", "opik_utils", "db"]
+__all__ = ["get_logger", "logger_utils", "db"]

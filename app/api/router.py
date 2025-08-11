@@ -1,7 +1,38 @@
-from typing import Annotated
+# -*- coding: utf-8 -*-
+# @Time    : 2024/10/16 15:58
+# @Author  : Galleons
+# @File    : routers.py
 
-from fastapi import FastAPI, Header, HTTPException
-from pydantic import BaseModel
+"""
+RAG 知识库平台 API 终端
+"""
+
+from typing import Annotated
+import logging
+from fastapi import FastAPI, Request, APIRouter, Header, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from pydantic import BaseModel, ValidationError
+from app.api.v1 import inference_v1, doc_parse
+
+
+# 配置日志格式
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(message)s'
+)
+
+api_router = FastAPI(
+    title="Cascade-RAG",
+    summary="多智体级联 RAG 后端",
+    version="1.1.0",
+)
+
+api_router.include_router( inference_v1.router, prefix="/api", tags=["inference-v1"])
+
+# api_router.include_router(chat_v3.router, prefix="/v3", tags=["chat-v3"])
+# api_router.include_router(chat_v2.router, prefix="/v1", tags=["chat-v2"])
+
 
 fake_secret_token = "coneofsilence"
 
@@ -11,6 +42,8 @@ fake_db = {
 }
 
 app = FastAPI()
+
+
 
 
 class Item(BaseModel):
@@ -36,3 +69,14 @@ async def create_item(item: Item, x_token: Annotated[str, Header()]):
         raise HTTPException(status_code=409, detail="Item already exists")
     fake_db[item.id] = item
     return item
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(
+        "routers:api_router",
+        host="0.0.0.0",
+        port=9011,
+        # reload=True,
+    )
