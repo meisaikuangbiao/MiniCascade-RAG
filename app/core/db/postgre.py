@@ -4,22 +4,54 @@
 # @File   : postgre.py
 
 """
-For PostgreSQL Connect
+For PostgreSQL Connect,
+使用连接池创建，取消单例类
 """
 
 from app.configs import postgres_config
 from app.core.logger_utils import get_logger
 from contextlib import contextmanager
 from typing import Any, Generator, Optional
-
-from sqlmodel import Session, create_engine
+from sqlmodel import SQLModel, Session, create_engine
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine
+from contextlib import asynccontextmanager
+from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
 logger = get_logger(__file__)
+engine: AsyncEngine = create_async_engine(
+    postgres_config.DB_URL,
+    echo=postgres_config.DB_ECHO,
+    pool_size=postgres_config.DB_POOL_SIZE,
+    max_overflow=postgres_config.DB_MAX_OVERFLOW,
+    pool_timeout=postgres_config.DB_POOL_TIMEOUT,
+    pool_recycle=postgres_config.DB_POOL_RECYCLE,
+    pool_pre_ping=True,   # 断线自动探活
+)
+
+
+async_session = async_sessionmaker(
+    engine,
+    expire_on_commit=False,  # 提升序列化体验
+)
+
+@asynccontextmanager
+async def session_scope():
+    async with async_session() as session:  # type: AsyncSession
+        try:
+            yield session
+            await session.commit()
+        except Exception:
+            await session.rollback()
+            raise
+
+async def get_session():
+    async with session_scope() as session:
+        yield session
 
 
 class PostgreSQLConnector:
     """用于连接PostgreSQL数据库的单例类。"""
-    _engine: Optional[Any] = None
+    _engine: Optional[Any] | None = None
 
     def __init__(self) -> None:
         if self._engine is None:

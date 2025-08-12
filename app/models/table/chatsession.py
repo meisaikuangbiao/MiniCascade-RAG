@@ -10,7 +10,7 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from typing import Optional, List
-from sqlmodel import SQLModel, Field, Relationship
+from sqlmodel import SQLModel, Field, Session, select, Relationship
 
 class Conversation(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
@@ -32,7 +32,6 @@ class ChatSession(SQLModel, table=True):
 class ChatHistory(SQLModel, table=True):
 
     id: Optional[int] = Field(default=None, primary_key=True)
-    chat_session_id: int = Field(foreign_key="chat_sessions.id")
     is_human_message: bool
     content: str
     metadata_completion_tokens: Optional[int] = None
@@ -41,7 +40,11 @@ class ChatHistory(SQLModel, table=True):
     metadata_system_fingerprint: Optional[str] = None
     external_id: Optional[str] = None
 
-    chat_session: "ChatSession" = Relationship(back_populates="chat_histories")
+    chat_session_id: int | None = Field(foreign_key="chat_session.id")
+    chat_session: ChatSession | None = Relationship(back_populates="chat_histories")
+
+
+
 # class ChatSession(Base):
 #     __tablename__ = "chat_sessions"
 #

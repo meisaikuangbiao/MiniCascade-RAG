@@ -14,6 +14,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ValidationError
 from app.api.v1 import inference_v1, doc_parse
+from contextlib import asynccontextmanager
+from app.core.db.postgre import engine
 
 
 # 配置日志格式
@@ -22,10 +24,21 @@ logging.basicConfig(
     format='%(asctime)s - %(message)s'
 )
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 可在此放置启动检查，如 ping DB
+    async with engine.begin() as conn:
+        await conn.run_sync(lambda c: None)  # 简单握手
+    yield
+    await engine.dispose()  # 释放连接池
+
+
 api_router = FastAPI(
     title="Cascade-RAG",
     summary="多智体级联 RAG 后端",
     version="1.1.0",
+    lifespan=lifespan,
 )
 
 api_router.include_router( inference_v1.router, prefix="/api", tags=["inference-v1"])
