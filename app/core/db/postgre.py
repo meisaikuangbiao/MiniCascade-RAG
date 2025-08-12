@@ -19,12 +19,12 @@ from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
 
 logger = get_logger(__file__)
 engine: AsyncEngine = create_async_engine(
-    postgres_config.DB_URL,
-    echo=postgres_config.DB_ECHO,
+    postgres_config.POSTGRES_URL,
+    echo=postgres_config.ECHO_SQL,
     pool_size=postgres_config.DB_POOL_SIZE,
-    max_overflow=postgres_config.DB_MAX_OVERFLOW,
-    pool_timeout=postgres_config.DB_POOL_TIMEOUT,
-    pool_recycle=postgres_config.DB_POOL_RECYCLE,
+    max_overflow=postgres_config.MAX_OVERFLOW,
+    pool_timeout=postgres_config.COMMAND_TIMEOUT,
+    pool_recycle=postgres_config.POOL_RECYCLE,
     pool_pre_ping=True,   # 断线自动探活
 )
 

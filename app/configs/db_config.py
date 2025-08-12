@@ -25,7 +25,7 @@ class PostgresConfig(BaseSettings):
     PG_DB: str = "mydb"
 
     # psycopg3 异步
-    postgres_url: PostgresDsn = Field(
+    POSTGRES_URL: PostgresDsn = Field(
         default="postgresql+psycopg://user:pass@localhost:5432/mydb"
     )
 
