@@ -21,7 +21,7 @@ logger = get_logger(__file__)
 engine: AsyncEngine = create_async_engine(
     postgres_config.POSTGRES_URL,
     echo=postgres_config.ECHO_SQL,
-    pool_size=postgres_config.DB_POOL_SIZE,
+    pool_size=postgres_config.POOL_SIZE,
     max_overflow=postgres_config.MAX_OVERFLOW,
     pool_timeout=postgres_config.COMMAND_TIMEOUT,
     pool_recycle=postgres_config.POOL_RECYCLE,
