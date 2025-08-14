@@ -218,6 +218,15 @@ wheels = [
 ]
 
 [[package]]
+name = "asgiref"
+version = "3.9.1"
+source = { registry = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple" }
+sdist = { url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages/90/61/0aa957eec22ff70b830b22ff91f825e70e1ef732c06666a805730f28b36b/asgiref-3.9.1.tar.gz", hash = "sha256:a5ab6582236218e5ef1648f242fd9f10626cfd4de8dc377db215d5d5098e3142", size = 36870, upload-time = "2025-07-08T09:07:43.344Z" }
+wheels = [
+    { url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages/7c/3c/0464dcada90d5da0e71018c04a140ad6349558afb30b3051b4264cc5b965/asgiref-3.9.1-py3-none-any.whl", hash = "sha256:f3bba7092a48005b5f5bacd747d36ee4a5a61f4a269a6df590b43144355ebd2c", size = 23790, upload-time = "2025-07-08T09:07:41.548Z" },
+]
+
+[[package]]
 name = "asttokens"
 version = "3.0.0"
 source = { registry = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple" }
@@ -604,7 +613,7 @@ name = "cryptography"
 version = "45.0.3"
 source = { registry = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple" }
 dependencies = [
-    { name = "cffi", marker = "(python_full_version < '3.13' and platform_python_implementation != 'PyPy') or (platform_machine != 'x86_64' and platform_python_implementation != 'PyPy') or (platform_python_implementation != 'PyPy' and sys_platform != 'darwin')" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy'" },
 ]
 sdist = { url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages/13/1f/9fa001e74a1993a9cadd2333bb889e50c66327b8594ac538ab8a04f915b7/cryptography-45.0.3.tar.gz", hash = "sha256:ec21313dd335c51d7877baf2972569f40a4291b76a0ce51391523ae358d05899", size = 744738, upload-time = "2025-05-25T14:17:24.777Z" }
 wheels = [
@@ -638,6 +647,20 @@ wheels = [
     { url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages/3d/ec/cd892180b9e42897446ef35c62442f5b8b039c3d63a05f618aa87ec9ebb5/cryptography-45.0.3-pp311-pypy311_pp73-manylinux_2_34_aarch64.whl", hash = "sha256:050ce5209d5072472971e6efbfc8ec5a8f9a841de5a4db0ebd9c2e392cb81972", size = 4150031, upload-time = "2025-05-25T14:17:14.131Z" },
     { url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages/db/d4/22628c2dedd99289960a682439c6d3aa248dff5215123ead94ac2d82f3f5/cryptography-45.0.3-pp311-pypy311_pp73-manylinux_2_34_x86_64.whl", hash = "sha256:dc10ec1e9f21f33420cc05214989544727e776286c1c16697178978327b95c9c", size = 4387389, upload-time = "2025-05-25T14:17:17.303Z" },
     { url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages/39/ec/ba3961abbf8ecb79a3586a4ff0ee08c9d7a9938b4312fb2ae9b63f48a8ba/cryptography-45.0.3-pp311-pypy311_pp73-win_amd64.whl", hash = "sha256:9eda14f049d7f09c2e8fb411dda17dd6b16a3c76a1de5e249188a32aeb92de19", size = 3337432, upload-time = "2025-05-25T14:17:19.507Z" },
+]
+
+[[package]]
+name = "dashscope"
+version = "1.24.1"
+source = { registry = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple" }
+dependencies = [
+    { name = "aiohttp" },
+    { name = "cryptography" },
+    { name = "requests" },
+    { name = "websocket-client" },
+]
+wheels = [
+    { url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages/1a/5e/58eb42ba9d23dbb2bb37032b4991fcdf5b0e42fcb624c3f095b253f490d3/dashscope-1.24.1-py3-none-any.whl", hash = "sha256:509241ef8c173e94da58ec4b94d4aacad3a151dc93ead6e5ea12acd27615b127", size = 1301135, upload-time = "2025-08-01T06:08:22.441Z" },
 ]
 
 [[package]]
@@ -1884,6 +1907,21 @@ wheels = [
 ]
 
 [[package]]
+name = "langgraph-checkpoint-postgres"
+version = "2.0.23"
+source = { registry = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple" }
+dependencies = [
+    { name = "langgraph-checkpoint" },
+    { name = "orjson" },
+    { name = "psycopg" },
+    { name = "psycopg-pool" },
+]
+sdist = { url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages/c4/35/40a005d01582c3e57c3bd6614a601010b5e8a3c02169d2337ebf948a3f76/langgraph_checkpoint_postgres-2.0.23.tar.gz", hash = "sha256:0962daa924eaa564380429742df217287ac579b377aae6c1abad9f1c2cfbee53", size = 118214, upload-time = "2025-07-16T10:05:19.073Z" }
+wheels = [
+    { url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/packages/b5/cb/df2b4b9b99c73c2622fc91af08c23b0aad4194afbe484cd836ad2bd12a0a/langgraph_checkpoint_postgres-2.0.23-py3-none-any.whl", hash = "sha256:d85b53c2efbd8d36d7bb8ca3491ed5601fddaf4f37b0e6eb961639a8edb33873", size = 40674, upload-time = "2025-07-16T10:05:17.825Z" },
+]
+
+[[package]]
 name = "langgraph-prebuilt"
 version = "0.2.2"
 source = { registry = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple" }
@@ -2435,7 +2473,9 @@ name = "minicascade-rag"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "asgiref" },
     { name = "bytewax" },
+    { name = "dashscope" },
     { name = "fastmcp", version = "1.0", source = { registry = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple" }, marker = "python_full_version >= '3.13' and platform_machine == 'x86_64' and sys_platform == 'darwin'" },
     { name = "fastmcp", version = "2.6.1", source = { registry = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple" }, marker = "python_full_version < '3.13' or platform_machine != 'x86_64' or sys_platform != 'darwin'" },
     { name = "gradio" },
@@ -2446,6 +2486,7 @@ dependencies = [
     { name = "langchain-tavily" },
     { name = "langfuse" },
     { name = "langgraph" },
+    { name = "langgraph-checkpoint-postgres" },
     { name = "llama-index" },
     { name = "markitdown" },
     { name = "notebook" },
@@ -2468,7 +2509,9 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "asgiref", specifier = ">=3.9.1" },
     { name = "bytewax", specifier = ">=0.21.1" },
+    { name = "dashscope", specifier = ">=1.24.1" },
     { name = "fastmcp" },
     { name = "gradio", specifier = ">=5.31.0" },
     { name = "httpx", extras = ["socks"], specifier = ">=0.28.1" },
@@ -2478,6 +2521,7 @@ requires-dist = [
     { name = "langchain-tavily", specifier = ">=0.2.1" },
     { name = "langfuse", specifier = ">=3.2.1" },
     { name = "langgraph", specifier = ">=0.4.8" },
+    { name = "langgraph-checkpoint-postgres", specifier = ">=2.0.23" },
     { name = "llama-index", specifier = ">=0.12.37" },
     { name = "markitdown", specifier = ">=0.1.2" },
     { name = "notebook", specifier = ">=7.4.3" },

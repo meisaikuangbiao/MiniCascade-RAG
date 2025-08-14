@@ -25,7 +25,10 @@ class PostgresConfig(BaseSettings):
     PG_DB: str = "mydb"
 
     # psycopg3 异步
-    POSTGRES_URL: PostgresDsn = Field(
+    POSTGRES: PostgresDsn = Field(
+        default="postgresql+psycopg://user:pass@localhost:5432/mydb"
+    )
+    POSTGRES_URL: str = Field(
         default="postgresql+psycopg://user:pass@localhost:5432/mydb"
     )
 
@@ -42,6 +45,24 @@ class PostgresConfig(BaseSettings):
             f"postgresql+asyncpg://{self.PG_USER}:{self.PG_PASSWORD}"
             f"@{self.PG_HOST}:{self.PG_PORT}/{self.PG_DB}"
         )
+
+    class Config:
+        env_file = ".env"
+
+class QdrantConfig(BaseSettings):
+
+    DEBUG: bool = True
+    COLLECTION_TEST: str | None = 'multi_demo'
+
+    MULTIMODAL_SIZE: int | None = 1024
+
+    # 连接池
+    POOL_SIZE: int = 10
+    MAX_OVERFLOW: int = 20
+    POOL_RECYCLE: int = 1800  # 秒，避免空闲连接被中断
+    ECHO_SQL: bool = False
+    COMMAND_TIMEOUT: float = 5.0  # 秒，asyncpg 全局命令超时
+
 
     class Config:
         env_file = ".env"

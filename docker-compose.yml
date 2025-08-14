@@ -24,25 +24,40 @@ services:
       - qdrant-data:/qdrant_data
     restart: always
 
+#  sql_service:
+#    image: timescale/timescaledb:latest-pg17
+#    environment:
+#      - POSTGRES_USER=time-user
+#      - POSTGRES_PASSWORD=time-pw
+#      - POSTGRES_DB=timescaledb
+#    ports:
+#      - "5433:5432"
+#    expose:
+#      - 5433
+#    volumes:
+#      - timescaledb_data:/var/lib/postgresql/data
   sql_service:
-    image: timescale/timescaledb:latest-pg17
+    image: postgres
+    container_name: postgres_db
+    restart: always
     environment:
-      - POSTGRES_USER=time-user
-      - POSTGRES_PASSWORD=time-pw
-      - POSTGRES_DB=timescaledb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
     ports:
       - "5433:5432"
-    expose:
-      - 5433
     volumes:
-      - timescaledb_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
+
 
   dragonfly:
     image: 'docker.dragonflydb.io/dragonflydb/dragonfly'
+    # Use below command if can't pull the image directly:
+    # sudo docker run --network=host --ulimit memlock=-1 docker.dragonflydb.io/dragonflydb/dragonfly
     ulimits:
       memlock: -1
     ports:
-      - "6380:6379"
+      - "6381:6379"
     # For better performance, consider `host` mode instead `port` to avoid docker NAT.
     # `host` mode is NOT currently supported in Swarm Mode.
     # https://docs.docker.com/compose/compose-file/compose-file-v3/#network_mode
@@ -84,5 +99,6 @@ services:
 
 volumes:
   qdrant-data:
-  timescaledb_data:
+  #timescaledb_data:
   dragonflydata:
+  pgdata:

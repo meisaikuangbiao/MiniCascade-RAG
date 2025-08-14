@@ -6,10 +6,15 @@
 """
 这里是文件说明
 """
+from .llm_config import LLMConfig
 #from .rag_config import RAGConfig
 from .pipeline_config import PipelineConfig
-from .db_config import PostgresConfig
+from .db_config import PostgresConfig, QdrantConfig
+from .agent_config import AgentConfig
 
 #rag_config = RAGConfig()
 pipeline_config = PipelineConfig()
 postgres_config = PostgresConfig()
+qdrant_config = QdrantConfig()
+llm_config = LLMConfig()
+agent_config = AgentConfig()

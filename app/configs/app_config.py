@@ -9,3 +9,23 @@
 import logging
 from pathlib import Path
 from typing import Any
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from enum import Enum
+
+ROOT_DIR = str(Path(__file__).parent.parent.parent)+'/.env'
+
+# Define environment types
+class Environment(str, Enum):
+    """Application environment types.
+
+    Defines the possible environments the application can run in:
+    development, staging, production, and test.
+    """
+
+    DEVELOPMENT = "development"
+    STAGING = "staging"
+    PRODUCTION = "production"
+    TEST = "test"
+
+class APPConfig(BaseSettings):
+    model_config = SettingsConfigDict(env_file=ROOT_DIR, env_file_encoding="utf-8", extra='ignore')

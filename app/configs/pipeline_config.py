@@ -12,11 +12,11 @@ from pathlib import Path
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-ROOT_DIR = str(Path(__file__).parent.parent.parent)
+ROOT_DIR = str(Path(__file__).parent.parent.parent)+'/.env'
 
 
 class PipelineConfig(BaseSettings):
-    model_config = SettingsConfigDict(env_file=ROOT_DIR, env_file_encoding="utf-8")
+    model_config = SettingsConfigDict(env_file=ROOT_DIR, env_file_encoding="utf-8", extra='ignore')
 
     # Embeddings config
     EMBEDDING_MODEL_ID: str = "bge-m3"
