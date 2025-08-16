@@ -8,6 +8,7 @@ ROOT_DIR = str(Path(__file__).parent.parent.parent)
 class AppSettings(BaseSettings):
     model_config = SettingsConfigDict(env_file=ROOT_DIR, env_file_encoding="utf-8")
 
+    PROJECT_NAME: str = 'Cascade-RAG'
     # MongoDB配置
     MONGO_DATABASE_HOST: str = (
         "mongodb://mongo1:30001,mongo2:30002,mongo3:30003/?replicaSet=my-replica-set"
@@ -15,9 +16,6 @@ class AppSettings(BaseSettings):
     MONGO_DATABASE_NAME: str = "twin"
 
     # 硅基流动API
-    Silicon_api_key1: str | None = "sk-gxijztovbtakciuwjwwqyaoxarjfvhuargxkoawhuzsanssm"
-    Silicon_api_key2: str | None = "sk-kutnkphezarrglswegiqwwaywqqwkvanwjobmwmdjututqkf"
-    Silicon_api_key3: str | None = "sk-jkcrphotzrjcdttdpbdzczufqryzmeogzbvwbtpabuitgnzx"
     Silicon_base_url: str | None = "https://api.siliconflow.cn/v1"
 
     Silicon_model_v1: str | None = "Qwen/Qwen3-32B"

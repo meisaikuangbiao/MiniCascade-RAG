@@ -26,7 +26,7 @@ from app.models.chat_message import (
     ChatSessionCreate, ChatHistoryCreate, ChatHistoryCreate,
     ChatSessionResponse, ChatHistoryResponse
 )
-from app.models.table.chatsession import ChatSession, ChatHistory
+from app.models.schemas.chatsession import ChatSession, ChatHistory
 
 class DataService:
     def __init__(self, db: Session, df: Dragonfly):
