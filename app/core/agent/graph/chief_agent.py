@@ -32,14 +32,15 @@ from openai import OpenAIError
 from psycopg_pool import AsyncConnectionPool
 
 from app.configs import (
+    Environment,
     app_config,
-    agent_config,
+    agent_config as settings,
 )
 from app.core.agent.tools import tools
 from app.core.logger_utils import logger
 #from app.core.metrics import llm_inference_duration_seconds
 from app.core.prompts import SYSTEM_PROMPT
-from app.schemas import (
+from app.models import (
     GraphState,
     Message,
 )
@@ -142,8 +143,8 @@ class LangGraphAgent:
 
         for attempt in range(max_retries):
             try:
-                with llm_inference_duration_seconds.labels(model=self.llm.model_name).time():
-                    generated_state = {"messages": [await self.llm.ainvoke(dump_messages(messages))]}
+                #with llm_inference_duration_seconds.labels(model=self.llm.model_name).time():
+                generated_state = {"messages": [await self.llm.ainvoke(dump_messages(messages))]}
                 logger.info(
                     "llm_response_generated",
                     session_id=state.session_id,
@@ -235,7 +236,7 @@ class LangGraphAgent:
                 graph_builder.set_entry_point("chat")
                 graph_builder.set_finish_point("chat")
 
-                # Get connection pool (may be None in production if DB unavailable)
+                # Get connection pool (maybe None in production if DB unavailable)
                 connection_pool = await self._get_connection_pool()
                 if connection_pool:
                     checkpointer = AsyncPostgresSaver(connection_pool)

@@ -3,7 +3,7 @@
 # @Author : Galleons
 # @File   : __init__.py.py
 
-"""This file contains the System prompts for the agent."""
+"""This file contains the prompts for the agent."""
 
 import os
 from datetime import datetime

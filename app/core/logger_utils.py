@@ -23,9 +23,9 @@ from typing import (
 
 import structlog
 
-from app.configs.app_config import (
+from app.configs import (
     Environment,
-    APPConfig,
+    agent_config as settings,
 )
 
 def get_logger(cls: str):
@@ -189,6 +189,4 @@ logger.info(
     log_level=settings.LOG_LEVEL,
     log_format=settings.LOG_FORMAT,
 )
-
-
 

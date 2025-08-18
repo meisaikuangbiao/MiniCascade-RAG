@@ -11,6 +11,7 @@ from .llm_config import LLMConfig
 from .pipeline_config import PipelineConfig
 from .db_config import PostgresConfig, QdrantConfig
 from .agent_config import AgentConfig
+from .app_config import AppConfig, Environment
 
 #rag_config = RAGConfig()
 pipeline_config = PipelineConfig()
@@ -18,3 +19,4 @@ postgres_config = PostgresConfig()
 qdrant_config = QdrantConfig()
 llm_config = LLMConfig()
 agent_config = AgentConfig()
+app_config = AppConfig()

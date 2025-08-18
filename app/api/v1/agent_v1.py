@@ -24,10 +24,10 @@ from fastapi.responses import StreamingResponse
 from app.api.services.auth import get_current_session
 from app.core.config import settings
 from app.core.agent.graph import LangGraphAgent
-from app.core.limiter import limiter
-from app.core.logging import logger
+#from app.core.limiter import limiter
+from app.core.logger_utils import logger
 from app.models.session import Session
-from app.schemas.chat import (
+from app.models.chat import (
     ChatRequest,
     ChatResponse,
     Message,
@@ -39,7 +39,7 @@ agent = LangGraphAgent()
 
 
 @router.post("/chat", response_model=ChatResponse)
-@limiter.limit(settings.RATE_LIMIT_ENDPOINTS["chat"][0])
+#@limiter.limit(settings.RATE_LIMIT_ENDPOINTS["chat"][0])
 async def chat(
         request: Request,
         chat_request: ChatRequest,
@@ -78,7 +78,7 @@ async def chat(
 
 
 @router.post("/chat/stream")
-@limiter.limit(settings.RATE_LIMIT_ENDPOINTS["chat_stream"][0])
+#@limiter.limit(settings.RATE_LIMIT_ENDPOINTS["chat_stream"][0])
 async def chat_stream(
         request: Request,
         chat_request: ChatRequest,
@@ -115,13 +115,19 @@ async def chat_stream(
             """
             try:
                 full_response = ""
-                with llm_stream_duration_seconds.labels(model=agent.llm.model_name).time():
-                    async for chunk in agent.get_stream_response(
-                            chat_request.messages, session.id, user_id=session.user_id
-                    ):
-                        full_response += chunk
-                        response = StreamResponse(content=chunk, done=False)
-                        yield f"data: {json.dumps(response.model_dump())}\n\n"
+                # with llm_stream_duration_seconds.labels(model=agent.llm.model_name).time():
+                #     async for chunk in agent.get_stream_response(
+                #             chat_request.messages, session.id, user_id=session.user_id
+                #     ):
+                #         full_response += chunk
+                #         response = StreamResponse(content=chunk, done=False)
+                #         yield f"data: {json.dumps(response.model_dump())}\n\n"
+                async for chunk in agent.get_stream_response(
+                        chat_request.messages, session.id, user_id=str(session.user_id)
+                ):
+                    full_response += chunk
+                    response = StreamResponse(content=chunk, done=False)
+                    yield f"data: {json.dumps(response.model_dump())}\n\n"
 
                 # Send final message indicating completion
                 final_response = StreamResponse(content="", done=True)
@@ -150,7 +156,7 @@ async def chat_stream(
 
 
 @router.get("/messages", response_model=ChatResponse)
-@limiter.limit(settings.RATE_LIMIT_ENDPOINTS["messages"][0])
+#@limiter.limit(settings.RATE_LIMIT_ENDPOINTS["messages"][0])
 async def get_session_messages(
         request: Request,
         session: Session = Depends(get_current_session),
@@ -176,7 +182,7 @@ async def get_session_messages(
 
 
 @router.delete("/messages")
-@limiter.limit(settings.RATE_LIMIT_ENDPOINTS["messages"][0])
+#@limiter.limit(settings.RATE_LIMIT_ENDPOINTS["messages"][0])
 async def clear_chat_history(
         request: Request,
         session: Session = Depends(get_current_session),

@@ -27,5 +27,5 @@ class Environment(str, Enum):
     PRODUCTION = "production"
     TEST = "test"
 
-class APPConfig(BaseSettings):
+class AppConfig(BaseSettings):
     model_config = SettingsConfigDict(env_file=ROOT_DIR, env_file_encoding="utf-8", extra='ignore')

@@ -20,9 +20,9 @@ class PostgresConfig(BaseSettings):
 
     PG_HOST: str = "localhost"
     PG_PORT: int = 5433
-    PG_USER: str = "postgres"
-    PG_PASSWORD: str = "postgres"
-    PG_DB: str = "mydb"
+    PG_USER: str = "admin"
+    PG_PASSWORD: str = "password"
+    PG_DB: str = "postgres"
 
     # psycopg3 异步
     POSTGRES: PostgresDsn = Field(
