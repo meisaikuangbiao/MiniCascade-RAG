@@ -4,7 +4,7 @@
 # @File   : chatsession.py
 
 """
-这里是文件说明
+User chat session data model
 """
 
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String

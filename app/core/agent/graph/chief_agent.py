@@ -65,6 +65,7 @@ class LangGraphAgent:
             temperature=settings.DEFAULT_LLM_TEMPERATURE,
             api_key=settings.LLM_API_KEY,
             max_tokens=settings.MAX_TOKENS,
+            base_url=settings.SI,
             **self._get_model_kwargs(),
         ).bind_tools(tools)
         self.tools_by_name = {tool.name: tool for tool in tools}

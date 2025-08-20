@@ -16,9 +16,9 @@ class MongoDatabaseConnector:
         if cls._instance is None:
             try:
                 cls._instance = MongoClient(settings.MONGO_DATABASE_HOST)
-                logger.info(
-                    f"成功连接到数据库，URI: {settings.MONGO_DATABASE_HOST}"
-                )
+                # logger.info(
+                #     f"成功连接到数据库，URI: {settings.MONGO_DATABASE_HOST}"
+                # )
             except ConnectionFailure:
                 logger.error(f"无法连接到数据库。")
 

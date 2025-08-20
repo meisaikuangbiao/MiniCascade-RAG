@@ -34,14 +34,10 @@ async def lifespan(app: FastAPI):
     await engine.dispose()  # 释放连接池
 
 
-api_router = FastAPI(
-    title="Cascade-RAG",
-    summary="多智体级联 RAG 后端",
-    version="1.1.0",
-    lifespan=lifespan,
-)
+api_router = APIRouter()
 
-api_router.include_router( inference_v1.router, prefix="/api", tags=["inference-v1"])
+
+api_router.include_router(inference_v1.router, prefix="/inference", tags=["inference-v1"])
 
 # api_router.include_router(chat_v3.router, prefix="/v3", tags=["chat-v3"])
 # api_router.include_router(chat_v2.router, prefix="/v1", tags=["chat-v2"])
@@ -54,8 +50,6 @@ fake_db = {
     "bar": {"id": "bar", "title": "Bar", "description": "The bartenders"},
 }
 
-app = FastAPI()
-
 
 
 
@@ -65,7 +59,7 @@ class Item(BaseModel):
     description: str | None = None
 
 
-@app.get("/items/{item_id}", response_model=Item)
+@api_router.get("/items/{item_id}", response_model=Item)
 async def read_main(item_id: str, x_token: Annotated[str, Header()]):
     if x_token != fake_secret_token:
         raise HTTPException(status_code=400, detail="Invalid X-Token header")
@@ -74,7 +68,7 @@ async def read_main(item_id: str, x_token: Annotated[str, Header()]):
     return fake_db[item_id]
 
 
-@app.post("/items/", response_model=Item)
+@api_router.post("/items/", response_model=Item)
 async def create_item(item: Item, x_token: Annotated[str, Header()]):
     if x_token != fake_secret_token:
         raise HTTPException(status_code=400, detail="Invalid X-Token header")
