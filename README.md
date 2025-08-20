@@ -1,6 +1,20 @@
 # MiniCascade-RAG
 
-Reasoning RAG
+
+A production-ready Reasoning RAG agent applications with LangGraph integration. Providing a robust foundation for building scalable, secure, and maintainable AI agent services.
+
+
+## 🌟 Features
+
+- **Production-Ready Architecture**
+
+  - FastAPI for high-performance async API endpoints
+  - LangGraph integration for AI agent workflows
+  - Langfuse for LLM observability and monitoring
+  - Structured logging with environment-specific formatting
+  - PostgreSQL for data persistence
+  - Docker and Docker Compose support
+
 
 ## Quick Start
 
