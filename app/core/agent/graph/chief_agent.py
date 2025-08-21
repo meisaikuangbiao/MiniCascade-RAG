@@ -3,7 +3,9 @@
 # @Author : Galleons
 # @File   : chief_agent.py
 
-"""This file contains the LangGraph Agent/workflow and interactions with the LLM."""
+"""
+This file contains the LangGraph Agent/workflow and interactions with the LLM.
+"""
 
 from typing import (
     Any,
@@ -34,6 +36,7 @@ from psycopg_pool import AsyncConnectionPool
 from app.configs import (
     Environment,
     app_config,
+    llm_config,
     agent_config as settings,
 )
 from app.core.agent.tools import tools
@@ -61,11 +64,11 @@ class LangGraphAgent:
         """Initialize the LangGraph Agent with necessary components."""
         # Use environment-specific LLM model
         self.llm = ChatOpenAI(
-            model=settings.LLM_MODEL,
+            model=llm_config.LLM_MODEL,
             temperature=settings.DEFAULT_LLM_TEMPERATURE,
             api_key=settings.LLM_API_KEY,
             max_tokens=settings.MAX_TOKENS,
-            base_url=settings.SI,
+            base_url=llm_config.SILICON_BASE_URL,
             **self._get_model_kwargs(),
         ).bind_tools(tools)
         self.tools_by_name = {tool.name: tool for tool in tools}
@@ -82,7 +85,7 @@ class LangGraphAgent:
         """
         model_kwargs = {}
 
-        # Development - we can use lower speeds for cost savings
+        # Development - can use lower speeds for cost savings
         if settings.ENVIRONMENT == Environment.DEVELOPMENT:
             model_kwargs["top_p"] = 0.8
 

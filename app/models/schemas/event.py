@@ -4,7 +4,7 @@
 # @File   : event.py
 
 """
-这里是文件说明
+timescaledb schema
 """
 from datetime import datetime, timezone
 from typing import List, Optional
