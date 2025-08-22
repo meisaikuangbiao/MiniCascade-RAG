@@ -9,11 +9,10 @@
 
 import logging
 from fastapi import APIRouter
-from qdrant_client import QdrantClient, models
-from qdrant_client.http.models import Filter, FieldCondition, MatchValue
+from qdrant_client import models
 from app.core.db.qdrant import QdrantClientManager
-from app.configs import qdrant_config, llm_config
-from typing import List, Optional
+from app.configs import qdrant_config
+from typing import List
 from app.core.rag.embedding import image_embedding, embedd_text_tolist
 
 # 配置日志

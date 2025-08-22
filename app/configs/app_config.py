@@ -6,20 +6,15 @@
 """
 这里是文件说明
 """
-import logging
 from pathlib import Path
-from typing import Any
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from enum import Enum
 
 ROOT_DIR = Path(__file__).resolve().parents[2] / '.env'
 
-import json
 import os
-from enum import Enum
 from pathlib import Path
 
-from dotenv import load_dotenv
 
 
 # Define environment types

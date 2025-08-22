@@ -1,5 +1,4 @@
 import pprint
-from typing import List, Optional
 
 #import sagemaker
 from app.pipeline.inference_pipeline.config import settings
@@ -53,7 +52,7 @@ class ReasoningPipeline:
         prompt_template_variables = {"question": query}
 
         if enable_rag is True:
-            logger.debug(f"开始检索。")
+            logger.debug("开始检索。")
 
             retriever = VectorRetriever(query=query)
 

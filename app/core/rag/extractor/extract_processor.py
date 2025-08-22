@@ -20,9 +20,7 @@ from core.rag.extractor.entity.extract_setting import ExtractSetting
 from core.rag.extractor.excel_extractor import ExcelExtractor
 from core.rag.extractor.extractor_base import BaseExtractor
 from core.rag.extractor.html_extractor import HtmlExtractor
-from core.rag.extractor.jina_reader_extractor import JinaReaderWebExtractor
 from core.rag.extractor.markdown_extractor import MarkdownExtractor
-from core.rag.extractor.notion_extractor import NotionExtractor
 from core.rag.extractor.pdf_extractor import PdfExtractor
 from core.rag.extractor.text_extractor import TextExtractor
 from core.rag.extractor.unstructured.unstructured_doc_extractor import UnstructuredWordExtractor

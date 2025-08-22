@@ -1,6 +1,5 @@
 import sys
 from pathlib import Path
-from typing import List, Optional
 
 # To mimic using multiple Python modules, such as 'core' and 'feature_pipeline',
 # we will add the './src' directory to the PYTHONPATH. This is not intended for
@@ -13,10 +12,6 @@ from core import get_logger
 from core.config import settings
 from core.rag.retriever import VectorRetriever
 
-from llama_index.core import Document
-from llama_index.core.retrievers import VectorIndexRetriever
-from llama_index.core.schema import QueryBundle
-from llama_index.core.vector_stores import VectorStoreQuery
 
 logger = get_logger(__name__)
 

@@ -20,7 +20,6 @@ from app.core import logger_utils
 from app.pipeline.feature_pipeline.models.raw import DocumentRawModel
 from app.pipeline.inference_pipeline.reasoning import ReasoningPipeline
 from qdrant_client import QdrantClient, models
-from app.core.db.qdrant import QdrantDatabaseConnector
 from app.pipeline.inference_pipeline.prompt_templates import InferenceTemplate
 from app.core.rag.retriever import VectorRetriever
 from app.core.rag.prompt_templates import QueryExpansionTemplate

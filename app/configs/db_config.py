@@ -7,8 +7,7 @@
 数据库连接配置
 """
 
-from pydantic.fields import FieldInfo
-from pydantic_settings import BaseSettings, PydanticBaseSettingsSource, SettingsConfigDict, TomlConfigSettingsSource
+from pydantic_settings import BaseSettings
 from pydantic import PostgresDsn, Field
 
 class PostgresConfig(BaseSettings):

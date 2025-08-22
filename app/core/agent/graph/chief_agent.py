@@ -35,7 +35,6 @@ from psycopg_pool import AsyncConnectionPool
 
 from app.configs import (
     Environment,
-    app_config,
     llm_config,
     agent_config as settings,
 )

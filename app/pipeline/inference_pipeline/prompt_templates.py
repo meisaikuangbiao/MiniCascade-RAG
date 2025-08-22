@@ -1,4 +1,3 @@
-from typing import List, Optional
 
 from app.core.rag.prompt_templates import BasePromptTemplate
 from langchain.prompts import PromptTemplate

@@ -7,7 +7,6 @@
 这里是文件说明
 """
 
-import pytest
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = '2'
 

@@ -184,7 +184,7 @@ class DatasetGenerator:
             artifact = Artifact(f"{data_type}-instruct-dataset")
             artifact.add(file_name_training_data)
             artifact.add(file_name_testing_data)
-            logger.info(f"Artifact created.")
+            logger.info("Artifact created.")
 
             experiment.log_artifact(artifact)
             experiment.end()
@@ -192,7 +192,7 @@ class DatasetGenerator:
 
         except Exception:
             logger.exception(
-                f"Failed to create Comet artifact and push it to Comet.",
+                "Failed to create Comet artifact and push it to Comet.",
             )
 
     def fetch_all_cleaned_content(self, collection_name: str) -> list:

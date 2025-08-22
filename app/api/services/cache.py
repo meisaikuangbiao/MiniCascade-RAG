@@ -8,7 +8,6 @@
 """
 
 from redis import Redis as Dragonfly, ConnectionPool
-from pydantic import BaseModel
 
 conn_pool = ConnectionPool(host='localhost', port=6379, db=0)
 dragonfly_client = Dragonfly(connection_pool=conn_pool)
@@ -23,7 +22,7 @@ from redis import Redis as Dragonfly
 from sqlmodel import Session
 
 from app.models.chat_message import (
-    ChatSessionCreate, ChatHistoryCreate, ChatHistoryCreate,
+    ChatSessionCreate, ChatHistoryCreate,
     ChatSessionResponse, ChatHistoryResponse
 )
 from app.models.schemas.chatsession import ChatSession, ChatHistory

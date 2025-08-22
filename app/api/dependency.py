@@ -7,7 +7,6 @@
 依赖配置脚本
 """
 #from app.api.dependency import langfuse
-from langfuse.openai import OpenAI
 from dotenv import load_dotenv
 import os
 load_dotenv()

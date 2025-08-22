@@ -6,7 +6,7 @@
 """
 embedding function
 """
-from typing import List, Dict
+from typing import Dict
 from app.configs import llm_config
 import requests
 
@@ -26,7 +26,6 @@ def embedd_text_tolist(text: str) -> list[int]:
 
 def image_embedding(url: str | None = None, path: str | None = None) -> Dict:
     import dashscope
-    import json
 
     image = url if url else path
     input = [{'image': image}]
@@ -56,7 +55,6 @@ def image_embedding(url: str | None = None, path: str | None = None) -> Dict:
 
 if __name__ == '__main__':
     import dashscope
-    import json
     from http import HTTPStatus
 
     # 实际使用中请将url地址替换为您的图片url地址

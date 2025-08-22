@@ -12,10 +12,10 @@ from app.configs import postgres_config
 from app.core.logger_utils import get_logger
 from contextlib import contextmanager
 from typing import Any, Generator, Optional
-from sqlmodel import SQLModel, Session, create_engine
+from sqlmodel import Session, create_engine
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine
 from contextlib import asynccontextmanager
-from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession
+from sqlalchemy.ext.asyncio import async_sessionmaker
 
 logger = get_logger(__file__)
 engine: AsyncEngine = create_async_engine(

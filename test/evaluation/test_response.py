@@ -7,7 +7,6 @@
 这里是文件说明
 """
 
-import pytest
 from app.pipeline.inference_pipeline.reasoning import ReasoningPipeline
 
 inference_endpoint = ReasoningPipeline(mock=False)

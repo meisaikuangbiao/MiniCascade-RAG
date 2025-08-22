@@ -97,6 +97,8 @@ services:
       - qdrant
     restart: always
 
+
+
 volumes:
   qdrant-data:
   #timescaledb_data:

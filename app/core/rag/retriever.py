@@ -1,9 +1,6 @@
 import concurrent.futures
-from typing import List, Optional
 
 import opik
-import requests
-from app.core.config import settings
 from qdrant_client import models
 #from app.pipeline.feature_pipeline.utils.embeddings import embed_model
 from app.pipeline.feature_pipeline.utils.embeddings import embedd_text_tolist

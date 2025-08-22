@@ -1,4 +1,3 @@
-from app.pipeline.inference_pipeline.config import settings
 from transformers import AutoTokenizer
 
 

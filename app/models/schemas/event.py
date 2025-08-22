@@ -6,13 +6,11 @@
 """
 timescaledb schema
 """
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import List, Optional
 # from pydantic import BaseModel, Field
-import sqlmodel
 from sqlmodel import SQLModel, Field
 from timescaledb import TimescaleModel
-from timescaledb.utils import get_utc_now
 
 # page visits at any given time
 
