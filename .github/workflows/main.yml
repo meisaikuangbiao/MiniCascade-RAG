@@ -26,6 +26,9 @@ jobs:
       - name: Install the project
         run: uv sync --locked --all-extras --dev
 
+      - name: Add app directory to Python path
+        run: echo "import sys; sys.path.insert(0, './app')" > $GITHUB_ENV
+
       - name: Run tests
         run: uv run pytest test
 
