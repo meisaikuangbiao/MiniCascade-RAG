@@ -26,9 +26,6 @@ jobs:
       - name: Install the project
         run: uv sync --locked --all-extras --dev
 
-      - name: Set PYTHONPATH for app module
-        run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
-
       - name: Run tests
         run: uv run pytest test
 
