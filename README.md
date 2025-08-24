@@ -25,14 +25,14 @@ docker compose up -d
 ```
 
 ### Deployment
-#### 3.1 uv environment
+#### uv environment
 Enter project directory, use：
 ```bash
 uv sync   # if not have uv use "pip install uv" for install
 ``` 
 to synchronize project environment automatically
 
-#### 3.2 docker
+#### docker
 Qdrant：
 ```bash
 docker run -p 6333:6333 -p 6334:6334 \

@@ -78,7 +78,7 @@ class ReasoningPipeline:
         answer = self.call_llm_service(messages=messages)
         logger.debug(f"Answer: {answer}")
 
-        num_answer_tokens = compute_num_tokens(answer)
+        #num_answer_tokens = compute_num_tokens(answer)
         # opik_context.update_current_trace(
         #     tags=["rag"],
         #     metadata={

@@ -8,13 +8,13 @@ from app.core import logger_utils
 from app.pipeline.feature_pipeline.models.raw import DocumentRawModel
 from app.pipeline.inference_pipeline.reasoning import ReasoningPipeline
 from qdrant_client import QdrantClient,models
+from markitdown import MarkItDown
 
 
 from pathlib import Path
 ROOT_DIR = str(Path(__file__).parent.parent.parent.parent)
 UPLOAD_FOLDER = os.path.join(ROOT_DIR, "uploads")
 
-from markitdown import MarkItDown
 
 client = QdrantClient(url="http://localhost:6333")
 doc_bases = [collection.name for collection in client.get_collections().collections]
@@ -83,7 +83,10 @@ def process_uploaded_file(files: list, dir_files: list, collection_choice: str =
 
 
 
-def process_query(query: str, show_reasoning: bool = False, use_background: bool = True, selected_collections: list = None):
+def process_query(query: str,
+                  show_reasoning: bool = False,
+                  use_background: bool = True,
+                  selected_collections: list = None):
 
     inference_endpoint = ReasoningPipeline(mock=False)
 
@@ -117,7 +120,8 @@ def add_new_collection(new_collection: str):
     client.create_collection(
             collection_name=new_collection,
             vectors_config=models.VectorParams(size=settings.EMBEDDING_SIZE, distance=models.Distance.COSINE),
-            quantization_config=models.ScalarQuantization(scalar=models.ScalarQuantizationConfig(type=models.ScalarType.INT8,quantile=0.99,always_ram=True,),),
+            quantization_config=models.ScalarQuantization(
+                scalar=models.ScalarQuantizationConfig(type=models.ScalarType.INT8,quantile=0.99,always_ram=True,),),
         )
 
     logger.debug(f"{doc_bases}<UNK>{new_collection}<UNK>]")

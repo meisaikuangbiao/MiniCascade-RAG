@@ -11,7 +11,7 @@
 import logging
 #from xinference.client import Client
 import numpy as np
-from qdrant_client import models
+import requests
 
 # 配置日志
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -32,7 +32,6 @@ logger = logging.getLogger(__name__)
 #embed_model_raw = client.get_model(settings.EMBEDDING_MODEL_ID)
 #embed_model = client.get_model(settings.EMBEDDING_MODEL_ID)
 
-import requests
 
 url = "https://api.siliconflow.cn/v1/embeddings"
 headers = {
@@ -63,9 +62,10 @@ def embedd_text_tolist(text: str) -> list[int]:
 
 
 def hybrid_embedding(texts: list[str]) -> dict:
-    output = embed_model_bge.encode(texts, return_dense=True, return_sparse=True, return_colbert_vecs=False)
-    idx, vals = zip(*output['lexical_weights'][0].items())
-    return {'dense': output['dense_vecs'][0], 'sparse': models.SparseVector(indices=idx, values=vals)}
+    #output = embed_model_bge.encode(texts, return_dense=True, return_sparse=True, return_colbert_vecs=False)
+    #idx, vals = zip(*output['lexical_weights'][0].items())
+    #return {'dense': output['dense_vecs'][0], 'sparse': models.SparseVector(indices=idx, values=vals)}
+    pass
 
 
 

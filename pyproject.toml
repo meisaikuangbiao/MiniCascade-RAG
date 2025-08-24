@@ -38,6 +38,7 @@ dependencies = [
     "qdrant-client>=1.14.2",
     "ragas>=0.3.0",
     "redis>=6.4.0",
+    "scikit-learn>=1.7.1",
     "sqlmodel>=0.0.24",
     "structlog>=25.3.0",
     # "unstructured>=0.17.2",
@@ -58,8 +59,8 @@ dev = [
 ]
 
 [tool.ruff]
-# Set the maximum line length to 100.
-line-length = 100
+# Set the maximum line length to 121.
+line-length = 121
 
 [tool.ruff.lint]
 # Add the `line-too-long` rule to the enforced rule set. By default, Ruff omits rules that

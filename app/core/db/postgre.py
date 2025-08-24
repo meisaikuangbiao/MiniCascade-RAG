@@ -66,7 +66,9 @@ class PostgreSQLConnector:
                 if all([host, port, user, password, database]):
                     dsn = f"postgresql+psycopg://{user}:{password}@{host}:{port}/{database}"
                 else:
-                    logger.error("PostgreSQL 配置缺失，无法初始化连接。请提供 POSTGRES_DATABASE_URL 或完整的主机/端口/用户名/密码/数据库名。")
+                    logger.error(
+                        "PostgreSQL 配置缺失，无法初始化连接。请提供 POSTGRES_DATABASE_URL 或完整的主机/端口/用户名/密码/数据库名。" # noqa: E501
+                    )
                     raise RuntimeError("PostgreSQL configuration is incomplete")
 
             try:

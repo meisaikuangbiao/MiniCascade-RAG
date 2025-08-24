@@ -8,6 +8,15 @@
 """
 
 from redis import Redis as Dragonfly, ConnectionPool
+from typing import List, Union
+
+from fastapi import HTTPException
+from sqlmodel import Session
+from app.models.schemas.chatsession import ChatSession, ChatHistory
+from app.models.chat_message import (
+    ChatSessionCreate, ChatHistoryCreate,
+    ChatSessionResponse, ChatHistoryResponse
+)
 
 conn_pool = ConnectionPool(host='localhost', port=6379, db=0)
 dragonfly_client = Dragonfly(connection_pool=conn_pool)
@@ -15,17 +24,6 @@ dragonfly_client = Dragonfly(connection_pool=conn_pool)
 def get_dragonfly():
     return dragonfly_client
 
-from typing import List, Union
-
-from fastapi import HTTPException
-from redis import Redis as Dragonfly
-from sqlmodel import Session
-
-from app.models.chat_message import (
-    ChatSessionCreate, ChatHistoryCreate,
-    ChatSessionResponse, ChatHistoryResponse
-)
-from app.models.schemas.chatsession import ChatSession, ChatHistory
 
 class DataService:
     def __init__(self, db: Session, df: Dragonfly):

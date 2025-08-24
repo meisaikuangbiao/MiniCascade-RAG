@@ -41,8 +41,8 @@ async def image_search(image: str) -> List[int]:
     Returns:
         tuple[int, List[Dict]]: (成功更新数量, 失败的更新记录列表)
     """
-    updated_count = 0
-    failed_updates = []
+    #updated_count = 0
+    #failed_updates = []
 
     with QdrantClientManager.get_client_context() as qdrant_client:
 

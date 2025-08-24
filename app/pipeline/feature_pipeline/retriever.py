@@ -1,5 +1,8 @@
 import sys
 from pathlib import Path
+from app.core.logger_utils import get_logger
+from app.core.config import settings
+from app.core.rag.retriever import VectorRetriever
 
 # To mimic using multiple Python modules, such as 'core' and 'feature_pipeline',
 # we will add the './src' directory to the PYTHONPATH. This is not intended for
@@ -8,9 +11,6 @@ ROOT_DIR = str(Path(__file__).parent)
 sys.path.append(ROOT_DIR)
 
 
-from core import get_logger
-from core.config import settings
-from core.rag.retriever import VectorRetriever
 
 
 logger = get_logger(__name__)

@@ -21,7 +21,9 @@ def embedd_text_tolist(text: str) -> list[int]:
         "model": "BAAI/bge-m3",
         "input": text
     }
-    embedding_list = requests.post(llm_config.SILICON_EMBEDDING, json=payload, headers=headers).json()['data'][0]['embedding']
+    embedding_list = requests.post(llm_config.SILICON_EMBEDDING,
+                                   json=payload,
+                                   headers=headers).json()['data'][0]['embedding']
     return embedding_list
 
 def image_embedding(url: str | None = None, path: str | None = None) -> Dict:

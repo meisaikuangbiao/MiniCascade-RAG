@@ -9,11 +9,11 @@
 from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from enum import Enum
+import os
 
 ROOT_DIR = Path(__file__).resolve().parents[2] / '.env'
 
-import os
-from pathlib import Path
+
 
 
 

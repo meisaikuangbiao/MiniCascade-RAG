@@ -7,7 +7,7 @@ from app.pipeline.feature_pipeline.utils.embeddings import embedd_text_tolist
 import app.core.logger_utils as logger_utils
 from app.core import lib
 from app.core.db.qdrant import QdrantDatabaseConnector
-from app.core.rag.query_expanison import QueryExpansion
+from app.core.rag.query_expansion import QueryExpansion
 from app.core.rag.reranking import Reranker
 from app.core.rag.self_query import SelfQuery
 
@@ -27,7 +27,10 @@ class VectorRetriever:
         self._metadata_extractor = SelfQuery()
         self._reranker = Reranker()
 
-    def _search_single_query(self, generated_query: str, collections: list[str], metadata_filter_value: dict = None, k: int = 5):
+    def _search_single_query(self, generated_query: str,
+                             collections: list[str],
+                             metadata_filter_value: dict = None,
+                             k: int = 5):
         #assert k > 3, "查询集合限制，k应该小于3"
         # 生成查询向量
         #query_vector = self._embedder.create_embedding(generated_query)['data'][0]['embedding']

@@ -2,7 +2,8 @@ from transformers import AutoTokenizer
 
 
 def compute_num_tokens(text: str) -> int:
-    tokenizer = AutoTokenizer.from_pretrained('/data/cyx_model_weights/Qwen3-8B',cache_dir='./config_cache',local_files_only=True)
+    tokenizer = AutoTokenizer.from_pretrained('/data/cyx_model_weights/Qwen3-8B',
+                                              cache_dir='./config_cache',local_files_only=True)
 
     return len(tokenizer.encode(text, add_special_tokens=False))
 
@@ -23,7 +24,8 @@ def truncate_text_to_max_tokens(text: str, max_tokens: int) -> tuple[str, int]:
     if current_tokens <= max_tokens:
         return text, current_tokens
 
-    tokenizer = AutoTokenizer.from_pretrained('/data/cyx_model_weights/Qwen3-8B',cache_dir='./config_cache',local_files_only=True)
+    tokenizer = AutoTokenizer.from_pretrained('/data/cyx_model_weights/Qwen3-8B',
+                                              cache_dir='./config_cache',local_files_only=True)
     tokens = tokenizer.encode(text, add_special_tokens=False)
 
     # 取前max_tokens个token并解码

@@ -27,15 +27,18 @@ from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from app.pipeline.inference_pipeline.utils import compute_num_tokens, truncate_text_to_max_tokens
 from pathlib import Path
+from markitdown import MarkItDown
 
 
 ROOT_DIR = str(Path(__file__).parent.parent.parent.parent)
 UPLOAD_FOLDER = os.path.join(ROOT_DIR, "uploads")
 
-from markitdown import MarkItDown
 
 sleep_time = 0.5
-model = ChatOpenAI(model=settings.MODEL_PATH, api_key=settings.KEY, base_url=settings.LOCAL,extra_body={"chat_template_kwargs": {"enable_thinking": False}},)
+model = ChatOpenAI(model=settings.MODEL_PATH,
+                   api_key=settings.KEY,
+                   base_url=settings.LOCAL,
+                   extra_body={"chat_template_kwargs": {"enable_thinking": False}},)
 query_expansion_template = QueryExpansionTemplate()
 prompt = query_expansion_template.create_template(3)
 chain = prompt | model
